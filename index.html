@@ -53,7 +53,6 @@
             line-height: 1.6;
         }
 
-        /* ── Scrollbar ── */
         ::-webkit-scrollbar {
             width: 5px;
         }
@@ -90,14 +89,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 36px;
-            height: 36px;
-            background: var(--gold);
-            color: var(--navy);
+            width: 38px;
+            height: 38px;
+            background: transparent;
             border-radius: 50%;
-            font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 0.5px;
+        }
+
+        .header-brand .brand-icon svg {
+            width: 100%;
+            height: 100%;
         }
 
         .header-brand .brand-name {
@@ -226,6 +226,15 @@
             border-color: var(--gold-dim);
             color: var(--navy);
         }
+        .quick-btn.buyers-btn {
+            background: var(--navy);
+            color: #fff;
+            border-color: var(--navy);
+        }
+        .quick-btn.buyers-btn:hover {
+            background: var(--navy-light);
+            border-color: var(--navy-light);
+        }
 
         /* ── Chat Container ── */
         .chat-container {
@@ -292,6 +301,7 @@
             align-items: flex-start;
             gap: 10px;
             flex-shrink: 0;
+            position: relative;
         }
 
         .input-area .input-wrapper {
@@ -327,7 +337,102 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+        }
+
+        /* Icon Buttons (Mobile-friendly) */
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--navy);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            color: #fff;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .icon-btn:hover {
+            background: var(--navy-light);
+            transform: scale(1.05);
+        }
+        .icon-btn:active {
+            transform: scale(0.95);
+        }
+        .icon-btn .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* More Actions Button */
+        .btn-more {
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            color: var(--navy);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            padding: 0;
+        }
+        .btn-more:hover {
+            background: var(--gold-dim);
+        }
+
+        /* More Actions Menu */
+        .more-actions-menu {
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 0;
+            right: auto;
+            width: max-content;
+            min-width: 190px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            padding: 8px;
+            z-index: 100;
+        }
+
+        .action-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            color: var(--text);
+            font-size: 0.85rem;
+            font-family: inherit;
+            transition: var(--transition);
+            text-align: right;
+            white-space: nowrap;
+        }
+        .action-menu-item:hover {
+            background: #e8ecf2;
+            border-color: var(--navy);
+        }
+        .menu-icon {
+            font-size: 1rem;
+            min-width: 24px;
         }
 
         .btn {
@@ -395,6 +500,102 @@
             display: none;
         }
 
+        /* Icon Buttons (Mobile-friendly) */
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--navy);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            color: #fff;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            padding: 0;
+        }
+        .icon-btn:hover {
+            background: var(--navy-light);
+            transform: scale(1.05);
+        }
+        .icon-btn:active {
+            transform: scale(0.95);
+        }
+        .icon-btn .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* More Actions Button */
+        .btn-more {
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            color: var(--navy);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            padding: 0;
+        }
+        .btn-more:hover {
+            background: var(--gold-dim);
+        }
+
+        /* More Actions Menu */
+        .more-actions-menu {
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 0;
+            right: auto;
+            width: max-content;
+            min-width: 190px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            padding: 8px;
+            z-index: 100;
+        }
+
+        .action-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            color: var(--text);
+            font-size: 0.85rem;
+            font-family: inherit;
+            transition: var(--transition);
+            text-align: right;
+            white-space: nowrap;
+        }
+        .action-menu-item:hover {
+            background: #e8ecf2;
+            border-color: var(--navy);
+        }
+        .menu-icon {
+            font-size: 1rem;
+            min-width: 24px;
+        }
+
         .file-chips {
             display: flex;
             gap: 6px;
@@ -424,7 +625,82 @@
             color: #7f1d1d;
         }
 
-        /* ── Modals ── */
+        /* ── Prompt Gallery ── */
+        .prompt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 14px;
+            margin-top: 1rem;
+        }
+
+        .prompt-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .prompt-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--navy-mid);
+            background: #f8fafc;
+        }
+
+        .prompt-card .category-tag {
+            display: inline-block;
+            background: var(--navy-mid);
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            width: fit-content;
+        }
+
+        /* Featured/Popular prompts */
+        .prompt-card.featured {
+            border: 2px solid var(--gold);
+            background: linear-gradient(135deg, #fffbf0 0%, #fff 100%);
+            box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.15), var(--shadow-sm);
+        }
+
+        .prompt-card.featured .category-tag {
+            background: var(--gold);
+            color: var(--navy);
+            font-weight: 700;
+        }
+
+        .prompt-card.featured:hover {
+            border-color: var(--gold-dim);
+            box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.2), var(--shadow-md);
+            transform: translateY(-6px);
+        }
+
+        .prompt-card .prompt-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--navy);
+            line-height: 1.3;
+        }
+
+        .prompt-card .prompt-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+
+        /* ── Modals (Common) ── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -508,50 +784,129 @@
             color: var(--gold-dim);
         }
 
-        /* Prompt Gallery grid */
-        .prompt-grid {
+        /* ── Buyers Modal ── */
+        .buyers-form {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 12px;
-            margin-top: 1rem;
-        }
-
-        .prompt-card {
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
             background: #f8fafc;
             border: 1px solid var(--border);
             border-radius: var(--radius-sm);
-            padding: 14px 16px;
-            cursor: pointer;
-            transition: var(--transition);
         }
-        .prompt-card:hover {
-            background: #eef2f7;
+        .buyers-form .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .buyers-form label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        .buyers-form input, 
+        .buyers-form textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .buyers-form input:focus,
+        .buyers-form textarea:focus {
             border-color: var(--navy-mid);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
+        }
+        .buyers-form textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        .buyers-form .full-width {
+            grid-column: span 2;
+        }
+        .buyers-form .form-actions {
+            grid-column: span 2;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
         }
 
-        .prompt-card .category-tag {
-            display: inline-block;
-            background: var(--gold);
-            color: var(--navy);
-            border-radius: 12px;
-            padding: 1px 10px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-            margin-bottom: 6px;
+        .buyers-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px;
+            margin-top: 1rem;
         }
-        .prompt-card .prompt-title {
-            font-weight: 700;
-            color: var(--navy);
-            margin-bottom: 3px;
-            font-size: 0.9rem;
+        .buyer-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s;
+            position: relative;
         }
-        .prompt-card .prompt-desc {
-            font-size: 0.75rem;
+        .buyer-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--navy-mid);
+        }
+        .buyer-card .buyer-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--navy);
+            margin-bottom: 2px;
+        }
+        .buyer-card .company {
+            font-size: 0.85rem;
+            color: var(--gold-dim);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .buyer-card .detail-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 2px;
+        }
+        .buyer-card .detail-row span:first-child {
             color: var(--text-muted);
-            line-height: 1.5;
+        }
+        .buyer-card .notes {
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 1px dashed var(--border);
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            line-height: 1.4;
+        }
+        .buyer-card .delete-btn {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: #f2f4f8;
+            border: 1px solid var(--border);
+            color: #b91c1c;
+            border-radius: 6px;
+            padding: 3px 8px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .buyer-card .delete-btn:hover {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .empty-buyers {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 20px;
+            font-size: 0.9rem;
         }
 
         /* ── Responsive ── */
@@ -593,10 +948,30 @@
             .input-area {
                 padding: 0.6rem 1rem;
                 flex-direction: column;
+                position: relative;
             }
             .input-area .actions-row {
                 width: 100%;
                 justify-content: flex-start;
+                gap: 6px;
+            }
+            .icon-btn, .btn-more {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+            .more-actions-menu {
+                bottom: calc(100% + 6px);
+                max-width: 200px;
+                left: auto;
+                right: 0;
+                flex-direction: column;
+                padding: 4px;
+                gap: 2px;
+            }
+            .action-menu-item {
+                padding: 8px 12px;
+                font-size: 0.75rem;
             }
             .btn {
                 padding: 6px 14px;
@@ -608,18 +983,59 @@
             }
             .prompt-grid {
                 grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .prompt-card {
+                padding: 12px 14px;
+            }
+            .prompt-card .prompt-title {
+                font-size: 0.9rem;
+            }
+            .prompt-card .prompt-desc {
+                font-size: 0.75rem;
             }
 
             .header-brand .brand-name {
                 font-size: 1rem;
             }
+            .buyers-form {
+                grid-template-columns: 1fr;
+            }
+            .buyers-form .full-width,
+            .buyers-form .form-actions {
+                grid-column: span 1;
+            }
         }
 
         @media (max-width: 500px) {
+            .input-area {
+                padding: 0.5rem 0.8rem;
+            }
+            .icon-btn, .btn-more {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+            .input-area textarea {
+                min-height: 40px;
+                font-size: 0.85rem;
+                padding: 8px 10px;
+            }
+            .more-actions-menu {
+                max-width: 180px;
+                padding: 3px;
+            }
+            .action-menu-item {
+                padding: 6px 10px;
+                font-size: 0.7rem;
+                gap: 8px;
+            }
+            .menu-icon {
+                font-size: 0.9rem;
+            }
             .header-brand .brand-icon {
                 width: 30px;
                 height: 30px;
-                font-size: 0.9rem;
             }
             .header-brand .brand-name {
                 font-size: 0.9rem;
@@ -640,7 +1056,18 @@
     <!-- ─── HEADER ─── -->
     <header class="header">
         <div class="header-brand">
-            <div class="brand-icon">K</div>
+            <div class="brand-icon">
+                <svg width="38" height="38" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 32 Q20 8 42 10 Q45 25 25 35 Z" fill="#7cb342" />
+                    <ellipse cx="50" cy="26" rx="16" ry="20" fill="#d9b3ff" transform="rotate(-20 50 26)" opacity="0.92" />
+                    <ellipse cx="72" cy="42" rx="14" ry="18" fill="#e8d4ff" transform="rotate(25 72 42)" opacity="0.92" />
+                    <ellipse cx="66" cy="65" rx="16" ry="20" fill="#c9a2ff" transform="rotate(55 66 65)" opacity="0.92" />
+                    <ellipse cx="40" cy="70" rx="15" ry="20" fill="#b57eeb" transform="rotate(100 40 70)" opacity="0.92" />
+                    <ellipse cx="24" cy="50" rx="14" ry="18" fill="#d4a8ff" transform="rotate(-55 24 50)" opacity="0.92" />
+                    <circle cx="50" cy="50" r="12" fill="#a855f7" />
+                    <circle cx="50" cy="50" r="7" fill="#c084fc" />
+                </svg>
+            </div>
             <div class="brand-name">دستیار <span>صادرات</span> کیان</div>
         </div>
         <div class="header-actions">
@@ -654,11 +1081,8 @@
 
     <!-- ─── QUICK ACTIONS ─── -->
     <div class="quick-actions">
-        <button class="quick-btn" onclick="insertQuickPrompt('market')">تحلیل بازار</button>
-        <button class="quick-btn" onclick="insertQuickPrompt('email')">ایمیل سرد</button>
-        <button class="quick-btn" onclick="insertQuickPrompt('keywords')">کلمات کلیدی</button>
-        <button class="quick-btn" onclick="insertQuickPrompt('buyers')">لیست خریداران</button>
         <button class="quick-btn gallery-btn" onclick="openPromptsGallery()">گالری پرامپت‌ها</button>
+        <button class="quick-btn buyers-btn" onclick="openBuyersModal()">مدیریت خریداران</button>
     </div>
 
     <!-- ─── CHAT ─── -->
@@ -676,10 +1100,35 @@
             <div class="file-chips" id="file-chips"></div>
         </div>
         <div class="actions-row">
-            <label for="file-input" class="file-label">پیوست فایل</label>
+            <!-- File Attachment Icon Button -->
+            <label for="file-input" class="icon-btn" title="پیوست فایل">
+                <span class="icon">📎</span>
+            </label>
             <input type="file" id="file-input" multiple accept=".pdf,.xlsx,.xls,.csv,.txt,.doc,.docx" />
-            <button class="btn" onclick="sendMessage()">ارسال</button>
-            <button class="btn btn-gold" onclick="exportChat()">خروجی</button>
+            
+            <!-- Send Icon Button -->
+            <button class="icon-btn" onclick="sendMessage()" title="ارسال پیام">
+                <span class="icon">➤</span>
+            </button>
+            
+            <!-- More Actions Button (Desktop only) -->
+            <button class="btn-more" onclick="toggleMoreActions(event)" title="گزینه‌های بیشتر">
+                ⋮
+            </button>
+        </div>
+        
+        <!-- More Actions Menu (Hidden by default) -->
+        <div class="more-actions-menu" id="more-actions-menu" style="display:none;">
+            <button class="action-menu-item" onclick="exportChat()">
+                <span class="menu-icon">💾</span> خروجی HTML
+            </button>
+            <button class="action-menu-item" onclick="exportSessionAsJSON()">
+                <span class="menu-icon">📥</span> ذخیره جلسه
+            </button>
+            <label for="session-import" class="action-menu-item" style="cursor:pointer; margin:0; display:flex;">
+                <span class="menu-icon">📤</span> بازیابی جلسه
+            </label>
+            <input type="file" id="session-import" accept=".json" style="display:none;" />
         </div>
     </div>
 
@@ -737,6 +1186,57 @@
         </div>
     </div>
 
+    <!-- ─── MODAL: مدیریت خریداران ─── -->
+    <div class="modal-overlay" id="buyers-modal-overlay">
+        <div class="modal">
+            <button class="modal-close" onclick="closeBuyersModal()">✕</button>
+            <h2>مدیریت لیست خریداران</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">
+                جزئیات مشتریان خود را اضافه کنید. این اطلاعات به‌صورت محلی در مرورگر شما ذخیره می‌شود.
+            </p>
+
+            <!-- Form to add new buyer -->
+            <div class="buyers-form">
+                <div class="form-group">
+                    <label>نام خریدار *</label>
+                    <input type="text" id="buyer-name" placeholder="مثلاً: آقای محمدی" />
+                </div>
+                <div class="form-group">
+                    <label>نام شرکت</label>
+                    <input type="text" id="buyer-company" placeholder="شرکت تجاری..." />
+                </div>
+                <div class="form-group">
+                    <label>کشور مقصد</label>
+                    <input type="text" id="buyer-country" placeholder="مثلاً: روسیه" />
+                </div>
+                <div class="form-group">
+                    <label>محصول مورد علاقه</label>
+                    <input type="text" id="buyer-product" placeholder="مثلاً: پسته، قیر..." />
+                </div>
+                <div class="form-group">
+                    <label>ایمیل</label>
+                    <input type="email" id="buyer-email" placeholder="example@email.com" />
+                </div>
+                <div class="form-group">
+                    <label>تلفن / واتساپ</label>
+                    <input type="text" id="buyer-phone" placeholder="+7 999..." />
+                </div>
+                <div class="form-group full-width">
+                    <label>یادداشت‌ها</label>
+                    <textarea id="buyer-notes" placeholder="نکات مهم، تاریخ تماس، نیازهای خاص و..."></textarea>
+                </div>
+                <div class="form-actions full-width">
+                    <button class="btn btn-gold" onclick="saveBuyer()">افزودن خریدار</button>
+                    <button class="btn btn-outline" onclick="clearBuyerForm()">پاک کردن فرم</button>
+                </div>
+            </div>
+
+            <!-- List of buyers -->
+            <h3 style="margin-top:20px;">خریداران ثبت‌شده</h3>
+            <div id="buyers-list-container" class="buyers-list"></div>
+        </div>
+    </div>
+
     <script>
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         //  CONFIGURATION
@@ -784,271 +1284,82 @@
         };
 
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        //  GALLERY PROMPTS  (40+ prompts)
+        //  GALLERY PROMPTS (40+ prompts)
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
         const GALLERY_PROMPTS = [
-            // ── بازار ──
-            {
-                category: 'تحلیل بازار',
-                title: 'مقایسه دو بازار هدف',
-                description: 'مقایسه دو کشور برای یک محصول خاص از نظر تقاضا، رقابت و تعرفه',
-                text: 'لطفاً بازار [محصول] را در دو کشور [کشور ۱] و [کشور ۲] مقایسه کن. برای هر کشور: حجم تقاضا، نرخ رشد، رقبای اصلی، تعرفه واردات، و میزان سهولت ورود را مشخص کن. در پایان، کدام کشور برای شروع بهتر است و چرا؟'
-            }, {
-                category: 'تحلیل بازار',
-                title: 'تحلیل روند قیمت و حاشیه سود',
-                description: 'بررسی قیمت‌های عمده‌فروشی و محاسبه حاشیه سود تقریبی',
-                text: 'برای صادرات [محصول] به [کشور]، میانگین قیمت عمده‌فروشی این محصول در بازار مقصد چقدر است؟ با احتساب هزینه تولید، حمل، بیمه، تعرفه و مالیات، حاشیه سود خالص من چقدر خواهد بود؟ لطفاً یک جدول محاسبه ارائه بده.'
-            }, {
-                category: 'تحلیل بازار',
-                title: 'تحلیل پتانسیل صادرات به روسیه',
-                description: 'بررسی فرصت‌ها و چالش‌های بازار روسیه برای محصول شما',
-                text: 'برای صادرات [محصول] به روسیه، تحلیل جامعی از پتانسیل بازار انجام بده. شامل: حجم واردات روسیه در ۳ سال اخیر، رقبای اصلی (داخلی و خارجی)، تعرفه‌های گمرکی، الزامات گواهی (EAC)، و بهترین شهرهای هدف (مسکو، سن‌پترزبورگ، یا مناطق صنعتی).'
-            }, {
-                category: 'تحلیل بازار',
-                title: 'تحلیل بازار قزاقستان برای محصولات غذایی',
-                description: 'بررسی تقاضا و کانال‌های توزیع مواد غذایی در قزاقستان',
-                text: 'بازار محصولات غذایی در قزاقستان را برای [محصول خاص] تحلیل کن. تقاضا، عادات مصرف، کانال‌های توزیع اصلی (خرده‌فروشی، هتلداری، صنایع تبدیلی)، و الزامات بهداشتی و گواهی حلال را بررسی کن. همچنین قیمت‌های رقبا را مقایسه کن.'
-            }, {
-                category: 'تحلیل بازار',
-                title: 'فرصت‌های صادراتی در آسیای میانه',
-                description: 'بررسی کشورهای ازبکستان، تاجیکستان و ترکمنستان',
-                text: 'برای صادرات [محصول] به کشورهای آسیای میانه (ازبکستان، تاجیکستان، ترکمنستان)، یک تحلیل مقایسه‌ای انجام بده. برای هر کشور: حجم تقاضا، زیرساخت‌های حمل‌ونقل، تعرفه‌ها، و میزان رقابت را مشخص کن. کدام کشور بهترین پتانسیل را دارد؟'
-            },
-
-            // ── خریدار ──
-            {
-                category: 'شناسایی خریدار',
-                title: 'یافتن خریداران بالقوه در یک کشور',
-                description: 'شناسایی انواع واردکنندگان و کانال‌های تماس',
-                text: 'می‌خواهم [محصول] را به [کشور] صادر کنم. چه شرکت‌ها یا سازمان‌هایی خریدار بالقوه این محصول هستند؟ لطفاً دسته‌بندی کن (واردکننده، توزیع‌کننده، عمده‌فروش، زنجیره خرده‌فروشی، کارخانه فرآوری) و برای هر دسته، سه مثال واقعی یا روش پیدا کردن آن‌ها ارائه بده.'
-            }, {
-                category: 'شناسایی خریدار',
-                title: 'نوشتن ایمیل معرفی (Cold Email)',
-                description: 'ایمیل حرفه‌ای برای اولین تماس با خریدار خارجی',
-                text: 'یک ایمیل معرفی کوتاه (حداکثر ۱۵۰ کلمه) به زبان [زبان] برای معرفی [محصول] به یک [نوع خریدار، مثلاً واردکننده] بنویس. لحن باید حرفه‌ای، قابل اعتماد و متناسب با فرهنگ [کشور] باشد. در انتها یک دعوت به گفتگو (CTA) بگنجان.'
-            }, {
-                category: 'شناسایی خریدار',
-                title: 'پاسخ به اعتراضات رایج خریداران',
-                description: 'آماده‌سازی پاسخ برای نگرانی‌های خریداران',
-                text: 'خریداران در [کشور] ممکن است به دلیل تحریم‌ها، کیفیت، یا تأخیر در تحویل از خرید از ایران نگران باشند. برای هر یک از این سه نگرانی، یک پاسخ حرفه‌ای و متقاعدکننده بنویس که اعتماد ایجاد کند، بدون اشاره به دور زدن تحریم‌ها.'
-            }, {
-                category: 'شناسایی خریدار',
-                title: 'پروفایل خریدار B2B ایده‌آل',
-                description: 'تعیین مشخصات دقیق خریدار هدف شما',
-                text: 'برای [محصول] در بازار [کشور]، پروفایل خریدار B2B ایده‌آل را ترسیم کن. شامل: اندازه شرکت، محدوده درآمد سالانه، تعداد کارکنان، تصمیم‌گیرنده اصلی (مدیر خرید، مدیرعامل، مهندس)، و معیارهای اصلی خرید (قیمت، کیفیت، زمان تحویل، گواهی‌ها).'
-            },
-
-            // ── سئو و دیجیتال ──
-            {
-                category: 'سئو و بازاریابی دیجیتال',
-                title: 'تحقیق کلمات کلیدی B2B',
-                description: 'پیدا کردن کلمات کلیدی با قصد خرید برای سایت',
-                text: 'برای [محصول] در بازار [کشور]، ۱۰ کلمه کلیدی B2B که واردکنندگان جستجو می‌کنند پیدا کن. کلمات را به زبان [زبان] بنویس و نوع هر کلمه (تراکنشی، محتوایی، ناوبری) را مشخص کن. همچنین پیشنهاد بده کدام کلمات برای صفحه محصول و کدام برای مقاله وبلاگ مناسب‌ترند.'
-            }, {
-                category: 'سئو و بازاریابی دیجیتال',
-                title: 'ایده‌های محتوای وبلاگ برای جذب B2B',
-                description: 'ایده‌های مقاله برای اعتمادسازی و جذب مشتری',
-                text: 'برای جذب واردکنندگان و خریداران عمده [محصول] در [کشور]، ۷ ایده مقاله وبلاگ پیشنهاد بده که مشکلات واقعی آن‌ها را حل کند. برای هر ایده، عنوان و یک توضیح ۲-۳ جمله‌ای بنویس.'
-            }, {
-                category: 'سئو و بازاریابی دیجیتال',
-                title: 'بهینه‌سازی صفحه محصول برای B2B',
-                description: 'چک‌لیست سئو و اعتمادسازی صفحه محصول',
-                text: 'برای صفحه محصول [محصول] در وب‌سایت من، یک چک‌لیست کامل سئو (on-page) و عناصر اعتمادساز (مانند گواهی‌ها، MOQ، زمان تحویل، ضمانت‌ها) ارائه بده که باعث شود خریدار B2B راحت‌تر تصمیم بگیرد.'
-            }, {
-                category: 'سئو و بازاریابی دیجیتال',
-                title: 'استراتژی محتوایی برای لینکدین',
-                description: 'برنامه انتشار محتوا در لینکدین برای جذب واردکننده',
-                text: 'یک استراتژی محتوایی ۳۰ روزه برای لینکدین طراحی کن تا واردکنندگان [کشور] را جذب کنم. شامل: تعداد پست در هفته، موضوعات کلیدی، فرمت‌ها (متن، تصویر، ویدئو)، و نحوه تعامل با مخاطبان.'
-            },
-
-            // ── تبلیغات ──
-            {
-                category: 'تبلیغات',
-                title: 'متن تبلیغ یاندکس دایرکت',
-                description: 'تبلیغ کوتاه و هدفمند برای موتور جستجوی روسی',
-                text: 'یک متن تبلیغاتی برای یاندکس دایرکت (حداکثر ۸۰ کاراکتر عنوان و ۲۰۰ کاراکتر توضیح) برای [محصول] بنویس. لحن باید بر قابلیت اطمینان و قیمت رقابتی تأکید کند. سه نسخه متفاوت ارائه بده.'
-            }, {
-                category: 'تبلیغات',
-                title: 'کمپین لینکدین برای جذب واردکننده',
-                description: 'متن آگهی لینکدین برای مخاطبان B2B',
-                text: 'یک آگهی لینکدین (حداکثر ۱۵۰ کلمه) برای معرفی [محصول] به مدیران خرید و واردکنندگان [کشور] بنویس. از کلمات کلیدی مرتبط استفاده کن و یک پیشنهاد ویژه (مثلاً ارسال نمونه رایگان یا مشاوره) اضافه کن.'
-            }, {
-                category: 'تبلیغات',
-                title: 'بنر تبلیغاتی برای نمایشگاه بین‌المللی',
-                description: 'متن و پیام کلیدی برای بنر غرفه نمایشگاه',
-                text: 'برای حضور در نمایشگاه [نام نمایشگاه] در [کشور]، یک متن کوتاه و تأثیرگذار برای بنر غرفه (حداکثر ۵۰ کلمه) بنویس که مزیت رقابتی [محصول] را برجسته کند. همچنین ۳ شعار جایگزین پیشنهاد بده.'
-            },
-
-            // ── لجستیک ──
-            {
-                category: 'لجستیک و حمل‌ونقل',
-                title: 'انتخاب بهترین مسیر حمل',
-                description: 'مقایسه مسیرهای ریلی، دریایی خزر و جاده‌ای',
-                text: 'برای ارسال [محصول] از ایران به [کشور مقصد]، مسیرهای حمل ممکن (ریلی، دریایی خزر، جاده‌ای) را مقایسه کن. زمان تقریبی، هزینه نسبی و ریسک هر کدام را مشخص کن و در نهایت بهترین گزینه را با دلیل پیشنهاد بده.'
-            }, {
-                category: 'لجستیک و حمل‌ونقل',
-                title: 'مدارک و اسناد لازم برای صادرات',
-                description: 'فهرست کامل مدارک گمرکی و بانکی',
-                text: 'برای صادرات [محصول] به [کشور]، چه مدارکی لازم است؟ (مانند فاکتور تجاری، بارنامه، گواهی مبدأ، گواهی بهداشت، EAC و...) لطفاً فهرست کامل با توضیح کوتاه هر مدرک و مرجع صادرکننده ارائه بده.'
-            }, {
-                category: 'لجستیک و حمل‌ونقل',
-                title: 'بهینه‌سازی حمل از طریق کریدور شمال-جنوب',
-                description: 'استفاده از INSTC برای کاهش زمان و هزینه',
-                text: 'چگونه می‌توانم از کریدور حمل‌ونقل بین‌المللی شمال-جنوب (INSTC) برای صادرات [محصول] به [کشور] استفاده کنم؟ مسیرهای پیشنهادی، هزینه‌ها، زمان ترانزیت، و ریسک‌های هر مسیر را تحلیل کن.'
-            },
-
-            // ── قوانین ──
-            {
-                category: 'قوانین و گواهی‌ها',
-                title: 'گواهی‌های اجباری و اختیاری',
-                description: 'شناسایی استانداردها و مجوزهای لازم',
-                text: 'برای [محصول]، در بازار [کشور] چه گواهی‌ها و استانداردهایی اجباری است؟ (مثلاً EAC، حلال، GOST، ISO). نحوه دریافت و هزینه تقریبی هر کدام را توضیح بده.'
-            }, {
-                category: 'قوانین و گواهی‌ها',
-                title: 'بررسی توافق‌نامه تجاری ایران و EAEU',
-                description: 'مزایای تعرفه‌ای تحت موافقت‌نامه موقت',
-                text: 'بر اساس توافق‌نامه تجارت آزاد موقت ایران و اتحادیه اقتصادی اوراسیا (EAEU)، برای [محصول] چه تعرفه ترجیحی در [کشور] اعمال می‌شود؟ این تعرفه را با تعرفه عادی مقایسه کن و بگو آیا صرفه‌جویی قابل توجه است؟'
-            }, {
-                category: 'قوانین و گواهی‌ها',
-                title: 'مراحل اخذ گواهی EAC برای محصولات صنعتی',
-                description: 'راهنمای گام‌به‌گام دریافت گواهی EAC',
-                text: 'برای صادرات [محصول صنعتی] به روسیه و کشورهای EAEU، مراحل اخذ گواهی EAC را به‌طور کامل توضیح بده. شامل: مدارک مورد نیاز، آزمایشگاه‌های معتبر، زمان تقریبی، هزینه‌ها، و نکات کلیدی برای تسریع فرآیند.'
-            },
-
-            // ── قیمت‌گذاری ──
-            {
-                category: 'قیمت‌گذاری',
-                title: 'محاسبه قیمت نهایی صادراتی',
-                description: 'تعیین قیمت بر اساس اینکوترمز و هزینه‌ها',
-                text: 'می‌خواهم [محصول] را بر اساس اینکوترمز [FOB/CIF/DAP] به [کشور] صادر کنم. لطفاً فرمول محاسبه قیمت نهایی برای خریدار را توضیح بده و با فرض هزینه تولید X، حمل Y، بیمه Z و تعرفه T، یک مثال عددی حل کن.'
-            }, {
-                category: 'قیمت‌گذاری',
-                title: 'استراتژی قیمت‌گذاری نفوذی یا رقابتی',
-                description: 'انتخاب رویکرد قیمت‌گذاری برای ورود به بازار',
-                text: 'برای ورود به بازار [کشور] با [محصول]، کدام استراتژی قیمت‌گذاری مناسب‌تر است: نفوذی (قیمت پایین برای جذب سریع) یا رقابتی (هم‌تراز با رقبا)؟ لطفاً مزایا و معایب هر کدام را با توجه به شرایط بازار تحلیل کن.'
-            }, {
-                category: 'قیمت‌گذاری',
-                title: 'تحلیل حساسیت قیمت در بازار هدف',
-                description: 'بررسی واکنش خریداران به تغییر قیمت',
-                text: 'برای [محصول] در بازار [کشور]، حساسیت خریداران به تغییر قیمت را تحلیل کن. اگر قیمت را ۵٪، ۱۰٪ و ۱۵٪ افزایش دهم، چه تأثیری بر تقاضا خواهد داشت؟ آیا خریداران حاضر به پرداخت قیمت بالاتر برای کیفیت بهتر هستند؟'
-            },
-
-            // ── مذاکره ──
-            {
-                category: 'مذاکره و فروش',
-                title: 'آماده‌سازی برای مذاکره حضوری یا آنلاین',
-                description: 'لیست نکات کلیدی و سؤالات احتمالی',
-                text: 'برای مذاکره با یک واردکننده [کشور] درباره [محصول]، ۵ سؤال احتمالی که آن‌ها خواهند پرسید را حدس بزن و برای هر کدام یک پاسخ قانع‌کننده آماده کن. همچنین ۳ نکته فرهنگی که باید رعایت کنم را بگو.'
-            }, {
-                category: 'مذاکره و فروش',
-                title: 'نوشتن پیش‌فاکتور (Proforma Invoice)',
-                description: 'راهنمای تنظیم پیش‌فاکتور حرفه‌ای',
-                text: 'یک قالب پیش‌فاکتور (Proforma Invoice) برای صادرات [محصول] به [کشور] ارائه بده. چه اقلامی باید در آن باشد؟ لطفاً یک نمونه با مقادیر فرضی بنویس و توضیح بده هر بخش چه اهمیتی دارد.'
-            }, {
-                category: 'مذاکره و فروش',
-                title: 'تکنیک‌های متقاعدسازی در فرهنگ روسی',
-                description: 'نکات روانشناختی و فرهنگی برای مذاکره با روس‌ها',
-                text: 'در مذاکره با خریداران روس، چه تکنیک‌های متقاعدسازی مؤثرتر است؟ به تفاوت‌های فرهنگی (سبک ارتباطی، تصمیم‌گیری، ساختار سلسله‌مراتبی) اشاره کن و یک استراتژی گام‌به‌گام برای مذاکره موفق ارائه بده.'
-            },
-
-            // ── پایش و توسعه ──
-            {
-                category: 'پایش و توسعه',
-                title: 'تحلیل SWOT برای ورود به بازار',
-                description: 'شناسایی نقاط قوت، ضعف، فرصت‌ها و تهدیدها',
-                text: 'برای ورود به بازار [کشور] با [محصول]، یک تحلیل SWOT کامل انجام بده. نقاط قوت و ضعف داخلی شرکت من و فرصت‌ها و تهدیدهای خارجی را با توجه به شرایط سیاسی، اقتصادی و رقابتی مشخص کن.'
-            }, {
-                category: 'پایش و توسعه',
-                title: 'برنامه ۹۰ روزه ورود به بازار',
-                description: 'برنامه اجرایی گام‌به‌گام برای شروع صادرات',
-                text: 'یک برنامه عملیاتی ۹۰ روزه برای ورود به بازار [کشور] با [محصول] تهیه کن. برنامه را به سه فاز ۳۰ روزه تقسیم کن و در هر فاز، اقدامات کلیدی، مسئولیت‌ها و معیارهای موفقیت را مشخص کن.'
-            }, {
-                category: 'پایش و توسعه',
-                title: 'بررسی ریسک‌های سیاسی و اقتصادی',
-                description: 'شناسایی ریسک‌های کلان و راهکارهای کاهش',
-                text: 'برای صادرات به [کشور]، چه ریسک‌های سیاسی، اقتصادی و ارزی وجود دارد؟ برای هر ریسک، یک راهکار عملی برای کاهش اثر آن ارائه بده (مثلاً استفاده از ارز جایگزین، بیمه صادراتی، تنوع بازار).'
-            }, {
-                category: 'پایش و توسعه',
-                title: 'برنامه تنوع‌بخشی به بازارهای هدف',
-                description: 'کاهش وابستگی به یک بازار خاص',
-                text: 'در حال حاضر به [کشور] صادرات دارم. برای کاهش ریسک، چه بازارهای جدیدی (در منطقه اوراسیا یا خاورمیانه) را هدف قرار دهم؟ یک برنامه تنوع‌بخشی با اولویت‌بندی بازارها بر اساس سهولت ورود و پتانسیل سود ارائه بده.'
-            },
-
-            // ── تخصصی ──
-            {
-                category: 'تخصصی',
-                title: 'استراتژی صادرات پسته به چین',
-                description: 'فرصت‌ها و چالش‌های بازار چین برای پسته ایران',
-                text: 'برای صادرات پسته ایران به چین، یک استراتژی جامع تدوین کن. شامل: تحلیل تقاضا، رقبای اصلی (آمریکا، ترکیه)، تعرفه‌های گمرکی، الزامات بهداشتی، کانال‌های توزیع در چین، و بهترین زمان برای ورود به بازار.'
-            }, {
-                category: 'تخصصی',
-                title: 'صادرات قیر به کشورهای CIS',
-                description: 'بررسی بازار قیر در روسیه، قزاقستان و ازبکستان',
-                text: 'بازار قیر را در سه کشور روسیه، قزاقستان و ازبکستان تحلیل کن. برای هر کشور: حجم واردات، مشخصات فنی مورد نیاز، رقبای اصلی، و فرصت‌های مناقصه‌های دولتی را بررسی کن. بهترین استراتژی ورود به هر بازار چیست؟'
-            }, {
-                category: 'تخصصی',
-                title: 'صادرات مبلمان اداری به روسیه',
-                description: 'الزامات استاندارد و کانال‌های فروش',
-                text: 'برای صادرات مبلمان اداری به روسیه، چه الزامات استانداردی (GOST، EAC) وجود دارد؟ کانال‌های فروش اصلی (عمده‌فروشی، مناقصه‌های دولتی، فروش مستقیم به شرکت‌ها) کدامند و هر کدام چه مزایا و چالش‌هایی دارند؟'
-            }, {
-                category: 'تخصصی',
-                title: 'ورود به بازار تجهیزات شهری در قزاقستان',
-                description: 'فرصت‌های مناقصه و پروژه‌های شهری',
-                text: 'بازار تجهیزات شهری (نیمکت، سطل زباله، تجهیزات بازی کودکان) در قزاقستان را تحلیل کن. پروژه‌های شهری در حال اجرا، نهادهای تصمیم‌گیرنده، الزامات فنی، و نحوه شرکت در مناقصه‌های دولتی را بررسی کن.'
-            },
-
-            // ── مالی و ارزی ──
-            {
-                category: 'مالی و ارزی',
-                title: 'مدیریت ریسک ارزی در صادرات',
-                description: 'راهکارهای کاهش ریسک نوسانات ارزی',
-                text: 'برای صادرات به [کشور] با ارز [ارز محلی/دلار/یورو]، چه راهکارهایی برای مدیریت ریسک نوسانات ارزی وجود دارد؟ قراردادهای ارزی، صندوق‌های پوشش ریسک، و استفاده از ارزهای دیجیتال یا پایدار را بررسی کن.'
-            }, {
-                category: 'مالی و ارزی',
-                title: 'سیستم‌های پرداخت بین‌المللی برای صادرات',
-                description: 'مقایسه روش‌های پرداخت امن برای صادرات',
-                text: 'برای صادرات [محصول] به [کشور]، چه روش‌های پرداخت بین‌المللی امن‌تر و کارآمدتر هستند؟ LC (اعتبار اسنادی)، پیش‌پرداخت، و روش‌های جایگزین مانند سواپ یا پرداخت از طریق کشورهای ثالث را مقایسه کن.'
-            },
-
-            // ── فرهنگی ──
-            {
-                category: 'فرهنگی',
-                title: 'آداب کسب‌وکار در روسیه',
-                description: 'نکات فرهنگی برای ارتباط مؤثر با روس‌ها',
-                text: 'در تعاملات تجاری با روس‌ها، چه آداب و رسومی را باید رعایت کنم؟ سبک ارتباطی، نحوه احوال‌پرسی، مدیریت زمان، ساختار جلسات، و تابوهای فرهنگی را توضیح بده تا بتوانم ارتباط مؤثرتری برقرار کنم.'
-            }, {
-                category: 'فرهنگی',
-                title: 'آداب کسب‌وکار در کشورهای آسیای میانه',
-                description: 'تفاوت‌های فرهنگی در قزاقستان، ازبکستان و تاجیکستان',
-                text: 'برای مذاکره و ارتباط با خریداران در قزاقستان، ازبکستان و تاجیکستان، چه تفاوت‌های فرهنگی مهمی وجود دارد؟ سبک تصمیم‌گیری، روابط شخصی، نحوه احوال‌پرسی، و هدایای تجاری را بررسی کن.'
-            },
-
-            // ── استراتژی ──
-            {
-                category: 'استراتژی',
-                title: 'استراتژی ورود به بازار ارمنستان',
-                description: 'فرصت‌های صادراتی در ارمنستان برای محصولات ایرانی',
-                text: 'بازار ارمنستان را برای صادرات [محصول] تحلیل کن. حجم واردات، تعرفه‌ها، توافقات تجاری دوجانبه، رقبای اصلی، و بهترین کانال‌های توزیع را بررسی کن. همچنین مزیت رقابتی ایران در این بازار را مشخص کن.'
-            }, {
-                category: 'استراتژی',
-                title: 'برنامه بازاریابی صادراتی یکپارچه',
-                description: 'ترکیب تبلیغات، محتوا و روابط عمومی',
-                text: 'یک برنامه بازاریابی صادراتی یکپارچه برای [محصول] در بازار [کشور] طراحی کن. شامل: ترکیب تبلیغات دیجیتال، تولید محتوا، روابط عمومی، شرکت در نمایشگاه‌ها، و همکاری با اینفلوئنسرهای صنعتی. بودجه تقریبی و جدول زمانی را هم مشخص کن.'
-            },
-
-            // ── اضافی ──
-            {
-                category: 'گمرک و تعرفه',
-                title: 'طبقه‌بندی HS و تعرفه‌های ترجیحی',
-                description: 'شناسایی کد HS صحیح و تعرفه‌های قابل اعمال',
-                text: 'برای [محصول]، کد HS دقیق را مشخص کن. سپس تعرفه واردات به [کشور] را بر اساس توافقات تجاری (EAEU، WTO و غیره) محاسبه کن. اگر تعرفه ترجیحی وجود دارد، شرایط استفاده از آن را توضیح بده.'
-            }, {
-                category: 'گمرک و تعرفه',
-                title: 'رویه‌های گمرکی در روسیه',
-                description: 'مراحل ترخیص کالا در گمرک روسیه',
-                text: 'مراحل ترخیص کالا از گمرک روسیه را برای [محصول] توضیح بده. مدارک مورد نیاز، زمان تقریبی، هزینه‌ها، و نقش کارگزار گمرکی را مشخص کن. همچنین نکات کلیدی برای جلوگیری از تأخیر را بگو.'
-            }
+            {category:'⭐ پرکاربرد',title:'تحلیل بازار',description:'تحلیل بازار محصول در کشور مقصد',text:'تحلیل بازار: لطفاً بازار [نام محصول] در [کشور مقصد] را تحلیل کن. تقاضا، رقبا، تعرفه‌ها و بهترین استراتژی ورود را بگو.'},
+            {category:'⭐ پرکاربرد',title:'ایمیل سرد',description:'نوشتن ایمیل معرفی برای خریداران',text:'ایمیل سرد: یک ایمیل معرفی کوتاه به زبان [زبان مقصد] برای [نام محصول] بنویس. لحن حرفه‌ای و متناسب با فرهنگ [کشور] باشد.'},
+            {category:'⭐ پرکاربرد',title:'کلمات کلیدی B2B',description:'یافتن کلمات کلیدی برای سئو',text:'کلمات کلیدی: برای [نام محصول] و بازار [کشور]، ۱۰ کلمه کلیدی B2B با قصد خرید در یاندکس/گوگل پیدا کن و نوع آن‌ها (تراکنشی یا محتوایی) را مشخص کن.'},
+            {category:'⭐ پرکاربرد',title:'لیست خریداران',description:'شناسایی خریداران احتمالی',text:'لیست خریداران: برای [نام محصول] در [کشور]، سه گروه اصلی خریداران B2B را شناسایی کن و برای هر کدام یک روش تماس پیشنهاد بده.'},
+            {category:'تحلیل بازار',title:'مقایسه دو بازار هدف',description:'مقایسه دو کشور برای یک محصول خاص از نظر تقاضا، رقابت و تعرفه',text:'لطفاً بازار [محصول] را در دو کشور [کشور ۱] و [کشور ۲] مقایسه کن. برای هر کشور: حجم تقاضا، نرخ رشد، رقبای اصلی، تعرفه واردات، و میزان سهولت ورود را مشخص کن. در پایان، کدام کشور برای شروع بهتر است و چرا؟'},
+            {category:'تحلیل بازار',title:'تحلیل روند قیمت و حاشیه سود',description:'بررسی قیمت‌های عمده‌فروشی و محاسبه حاشیه سود تقریبی',text:'برای صادرات [محصول] به [کشور]، میانگین قیمت عمده‌فروشی این محصول در بازار مقصد چقدر است؟ با احتساب هزینه تولید، حمل، بیمه، تعرفه و مالیات، حاشیه سود خالص من چقدر خواهد بود؟ لطفاً یک جدول محاسبه ارائه بده.'},
+            {category:'تحلیل بازار',title:'تحلیل پتانسیل صادرات به روسیه',description:'بررسی فرصت‌ها و چالش‌های بازار روسیه برای محصول شما',text:'برای صادرات [محصول] به روسیه، تحلیل جامعی از پتانسیل بازار انجام بده. شامل: حجم واردات روسیه در ۳ سال اخیر، رقبای اصلی (داخلی و خارجی)، تعرفه‌های گمرکی، الزامات گواهی (EAC)، و بهترین شهرهای هدف (مسکو، سن‌پترزبورگ، یا مناطق صنعتی).'},
+            {category:'تحلیل بازار',title:'تحلیل بازار قزاقستان برای محصولات غذایی',description:'بررسی تقاضا و کانال‌های توزیع مواد غذایی در قزاقستان',text:'بازار محصولات غذایی در قزاقستان را برای [محصول خاص] تحلیل کن. تقاضا، عادات مصرف، کانال‌های توزیع اصلی (خرده‌فروشی، هتلداری، صنایع تبدیلی)، و الزامات بهداشتی و گواهی حلال را بررسی کن. همچنین قیمت‌های رقبا را مقایسه کن.'},
+            {category:'تحلیل بازار',title:'فرصت‌های صادراتی در آسیای میانه',description:'بررسی کشورهای ازبکستان، تاجیکستان و ترکمنستان',text:'برای صادرات [محصول] به کشورهای آسیای میانه (ازبکستان، تاجیکستان، ترکمنستان)، یک تحلیل مقایسه‌ای انجام بده. برای هر کشور: حجم تقاضا، زیرساخت‌های حمل‌ونقل، تعرفه‌ها، و میزان رقابت را مشخص کن. کدام کشور بهترین پتانسیل را دارد؟'},
+            {category:'تحلیل بازار',title:'تحلیل رقبا و موضع رقابتی',description:'شناسایی رقبای اصلی و نقاط تمایز محصول',text:'برای [محصول] در بازار [کشور]، سه رقیب اصلی را شناسایی کن و تحلیل جامع از موضع رقابتی آن‌ها انجام بده. شامل: قیمت‌گذاری، کیفیت، کانال‌های توزیع، و استراتژی بازاریابی هر کدام. سپس نقاط تمایز منحصر‌به‌فردی را مشخص کن که من می‌توانم برای ایجاد مزیت رقابتی استفاده کنم.'},
+            {category:'تحلیل بازار',title:'تحلیل تقسیم‌بندی بازار (Market Segmentation)',description:'شناسایی بخش‌های هدف و نیازهای متفاوت',text:'برای [محصول] در بازار [کشور]، بازار را به سه تا پنج بخش تقسیم کن. برای هر بخش: اندازه بازار، ویژگی‌های مشتریان، نیازهای مختص، و راهبرد ورود را مشخص کن. کدام بخش بیشترین پتانسیل سود را دارد؟'},
+            {category:'تحلیل بازار',title:'تحلیل فصلی و تغییرات موسمی تقاضا',description:'بررسی نوسانات موسمی در تقاضا و کیفیت محصول',text:'آیا تقاضا برای [محصول] در بازار [کشور] فصلی است؟ اگر بله، الگوی فصلی را توضیح بده و برای هر فصل: میزان تقاضا، بهترین زمان برای ارسال، و استراتژی موجودی را پیشنهاد بده.'},
+            {category:'شناسایی خریدار',title:'یافتن خریداران بالقوه در یک کشور',description:'شناسایی انواع واردکنندگان و کانال‌های تماس',text:'می‌خواهم [محصول] را به [کشور] صادر کنم. چه شرکت‌ها یا سازمان‌هایی خریدار بالقوه این محصول هستند؟ لطفاً دسته‌بندی کن (واردکننده، توزیع‌کننده، عمده‌فروش، زنجیره خرده‌فروشی، کارخانه فرآوری) و برای هر دسته، سه مثال واقعی یا روش پیدا کردن آن‌ها ارائه بده.'},
+            {category:'شناسایی خریدار',title:'نوشتن ایمیل معرفی (Cold Email)',description:'ایمیل حرفه‌ای برای اولین تماس با خریدار خارجی',text:'یک ایمیل معرفی کوتاه (حداکثر ۱۵۰ کلمه) به زبان [زبان] برای معرفی [محصول] به یک [نوع خریدار، مثلاً واردکننده] بنویس. لحن باید حرفه‌ای، قابل اعتماد و متناسب با فرهنگ [کشور] باشد. در انتها یک دعوت به گفتگو (CTA) بگنجان.'},
+            {category:'شناسایی خریدار',title:'پاسخ به اعتراضات رایج خریداران',description:'آماده‌سازی پاسخ برای نگرانی‌های خریداران',text:'خریداران در [کشور] ممکن است به دلیل تحریم‌ها، کیفیت، یا تأخیر در تحویل از خرید از ایران نگران باشند. برای هر یک از این سه نگرانی، یک پاسخ حرفه‌ای و متقاعدکننده بنویس که اعتماد ایجاد کند، بدون اشاره به دور زدن تحریم‌ها.'},
+            {category:'شناسایی خریدار',title:'پروفایل خریدار B2B ایده‌آل',description:'تعیین مشخصات دقیق خریدار هدف شما',text:'برای [محصول] در بازار [کشور]، پروفایل خریدار B2B ایده‌آل را ترسیم کن. شامل: اندازه شرکت، محدوده درآمد سالانه، تعداد کارکنان، تصمیم‌گیرنده اصلی (مدیر خرید، مدیرعامل، مهندس)، و معیارهای اصلی خرید (قیمت، کیفیت، زمان تحویل، گواهی‌ها).'},
+            {category:'شناسایی خریدار',title:'ایجاد لیست خریداران احتمالی',description:'جمع‌آوری و سازماندهی اطلاعات تماس',text:'برای [محصول] در بازار [کشور]، یک لیست ۲۰ نفری خریدار احتمالی تهیه کن. برای هر خریدار: نام، شرکت، تلفن، ایمیل، و موضع آن‌ها در شرکت را شامل شود. سپس آن‌ها را بر اساس پتانسیل سفارش درجه‌بندی کن.'},
+            {category:'سئو و بازاریابی دیجیتال',title:'تحقیق کلمات کلیدی B2B',description:'پیدا کردن کلمات کلیدی با قصد خرید برای سایت',text:'برای [محصول] در بازار [کشور]، ۱۰ کلمه کلیدی B2B که واردکنندگان جستجو می‌کنند پیدا کن. کلمات را به زبان [زبان] بنویس و نوع هر کلمه (تراکنشی، محتوایی، ناوبری) را مشخص کن. همچنین پیشنهاد بده کدام کلمات برای صفحه محصول و کدام برای مقاله وبلاگ مناسب‌ترند.'},
+            {category:'سئو و بازاریابی دیجیتال',title:'ایده‌های محتوای وبلاگ برای جذب B2B',description:'ایده‌های مقاله برای اعتمادسازی و جذب مشتری',text:'برای جذب واردکنندگان و خریداران عمده [محصول] در [کشور]، ۷ ایده مقاله وبلاگ پیشنهاد بده که مشکلات واقعی آن‌ها را حل کند. برای هر ایده، عنوان و یک توضیح ۲-۳ جمله‌ای بنویس.'},
+            {category:'سئو و بازاریابی دیجیتال',title:'بهینه‌سازی صفحه محصول برای B2B',description:'چک‌لیست سئو و اعتمادسازی صفحه محصول',text:'برای صفحه محصول [محصول] در وب‌سایت من، یک چک‌لیست کامل سئو (on-page) و عناصر اعتمادساز (مانند گواهی‌ها، MOQ، زمان تحویل، ضمانت‌ها) ارائه بده که باعث شود خریدار B2B راحت‌تر تصمیم بگیرد.'},
+            {category:'سئو و بازاریابی دیجیتال',title:'استراتژی محتوایی برای لینکدین',description:'برنامه انتشار محتوا در لینکدین برای جذب واردکننده',text:'یک استراتژی محتوایی ۳۰ روزه برای لینکدین طراحی کن تا واردکنندگان [کشور] را جذب کنم. شامل: تعداد پست در هفته، موضوعات کلیدی، فرمت‌ها (متن، تصویر، ویدئو)، و نحوه تعامل با مخاطبان.'},
+            {category:'بسته‌بندی و برچسب‌گذاری',title:'الزامات برچسب‌گذاری در بازار هدف',description:'شناسایی الزامات قانونی برچسب کالا',text:'برای صادرات [محصول] به [کشور]، چه الزاماتی برای برچسب‌گذاری وجود دارد؟ (زبان، اطلاعات تغذیه‌ای، محل تولید، تاریخ انقضا) لطفاً فهرست کامل الزامات و نکات طراحی عملی را ارائه بده.'},
+            {category:'بسته‌بندی و برچسب‌گذاری',title:'طراحی بسته‌بندی برای بازار خارجی',description:'توجه به عوامل فرهنگی و فنی در بسته‌بندی',text:'برای [محصول]، یک طراحی بسته‌بندی که برای بازار [کشور] مناسب باشد توضیح بده. شامل: رنگ‌های پسند، متن‌های لازم، حجم و وزن مناسب، و ملاحظات حمل‌ونقل. همچنین هزینه تقریبی بسته‌بندی را محاسبه کن.'},
+            {category:'بسته‌بندی و برچسب‌گذاری',title:'شیوه‌های بسته‌بندی اقتصادی برای صادرات',description:'کاهش هزینه بسته‌بندی بدون کاهش کیفیت',text:'برای کاهش هزینه بسته‌بندی [محصول] در صادرات، چه شیوه‌هایی پیشنهاد می‌دهی؟ مواد بسته‌بندی جایگزین، طراحی بهینه‌شده، و روش‌های حمل اقتصادی را بررسی کن. برآورد صرفه‌جویی هزینه را محاسبه کن.'},
+            {category:'تبلیغات',title:'متن تبلیغ یاندکس دایرکت',description:'تبلیغ کوتاه و هدفمند برای موتور جستجوی روسی',text:'یک متن تبلیغاتی برای یاندکس دایرکت (حداکثر ۸۰ کاراکتر عنوان و ۲۰۰ کاراکتر توضیح) برای [محصول] بنویس. لحن باید بر قابلیت اطمینان و قیمت رقابتی تأکید کند. سه نسخه متفاوت ارائه بده.'},
+            {category:'تبلیغات',title:'کمپین لینکدین برای جذب واردکننده',description:'متن آگهی لینکدین برای مخاطبان B2B',text:'یک آگهی لینکدین (حداکثر ۱۵۰ کلمه) برای معرفی [محصول] به مدیران خرید و واردکنندگان [کشور] بنویس. از کلمات کلیدی مرتبط استفاده کن و یک پیشنهاد ویژه (مثلاً ارسال نمونه رایگان یا مشاوره) اضافه کن.'},
+            {category:'تبلیغات',title:'بنر تبلیغاتی برای نمایشگاه بین‌المللی',description:'متن و پیام کلیدی برای بنر غرفه نمایشگاه',text:'برای حضور در نمایشگاه [نام نمایشگاه] در [کشور]، یک متن کوتاه و تأثیرگذار برای بنر غرفه (حداکثر ۵۰ کلمه) بنویس که مزیت رقابتی [محصول] را برجسته کند. همچنین ۳ شعار جایگزین پیشنهاد بده.'},
+            {category:'تبلیغات',title:'محتوا برای رسانه‌های اجتماعی B2B',description:'ایده‌های پست برای تویتر، فیسبوک و اینستاگرام',text:'برای [محصول]، ۱۲ ایده پست برای رسانه‌های اجتماعی (تویتر، فیسبوک، اینستاگرام) ارائه بده. شامل: محتوای آموزشی، معرفی محصول، نکات صنعتی، و تعامل با مخاطبین. برای هر پست یک متن نمونه بنویس.'},
+            {category:'تبلیغات',title:'کمپین ایمیل تحریک‌کننده (Follow-up Email)',description:'توالی ایمیل‌های تحریک‌کننده برای افزایش نرخ تبدیل',text:'برای تحریک خریداران احتمالی که تاکنون خریده نیستند، یک سری ۵ ایمیل طراحی کن. هر ایمیل باید یک زاویه متفاوت داشته باشد و [محصول] را از دیدگاه‌های مختلف معرفی کند. میان هر ایمیل ۲-۳ روز فاصله باشد.'},
+            {category:'لجستیک و حمل‌ونقل',title:'انتخاب بهترین مسیر حمل',description:'مقایسه مسیرهای ریلی، دریایی خزر و جاده‌ای',text:'برای ارسال [محصول] از ایران به [کشور مقصد]، مسیرهای حمل ممکن (ریلی، دریایی خزر، جاده‌ای) را مقایسه کن. زمان تقریبی، هزینه نسبی و ریسک هر کدام را مشخص کن و در نهایت بهترین گزینه را با دلیل پیشنهاد بده.'},
+            {category:'لجستیک و حمل‌ونقل',title:'مدارک و اسناد لازم برای صادرات',description:'فهرست کامل مدارک گمرکی و بانکی',text:'برای صادرات [محصول] به [کشور]، چه مدارکی لازم است؟ (مانند فاکتور تجاری، بارنامه، گواهی مبدأ، گواهی بهداشت، EAC و...) لطفاً فهرست کامل با توضیح کوتاه هر مدرک و مرجع صادرکننده ارائه بده.'},
+            {category:'لجستیک و حمل‌ونقل',title:'بهینه‌سازی حمل از طریق کریدور شمال-جنوب',description:'استفاده از INSTC برای کاهش زمان و هزینه',text:'چگونه می‌توانم از کریدور حمل‌ونقل بین‌المللی شمال-جنوب (INSTC) برای صادرات [محصول] به [کشور] استفاده کنم؟ مسیرهای پیشنهادی، هزینه‌ها، زمان ترانزیت، و ریسک‌های هر مسیر را تحلیل کن.'},
+            {category:'لجستیک و حمل‌ونقل',title:'مشکلات حمل‌ونقل و راهکارهای عملی',description:'حل مشکلات متداول در صادرات',text:'در صادرات [محصول]، چه مشکلات متداول در حمل‌ونقل وجود دارد؟ (تأخیر، آسیب کالا، مسائل گمرکی) برای هر مشکل، یک راهکار عملی و کاهنده‌ی ریسک پیشنهاد بده.'},
+            {category:'قوانین و گواهی‌ها',title:'گواهی‌های اجباری و اختیاری',description:'شناسایی استانداردها و مجوزهای لازم',text:'برای [محصول]، در بازار [کشور] چه گواهی‌ها و استانداردهایی اجباری است؟ (مثلاً EAC، حلال، GOST، ISO). نحوه دریافت و هزینه تقریبی هر کدام را توضیح بده.'},
+            {category:'قوانین و گواهی‌ها',title:'بررسی توافق‌نامه تجاری ایران و EAEU',description:'مزایای تعرفه‌ای تحت موافقت‌نامه موقت',text:'بر اساس توافق‌نامه تجارت آزاد موقت ایران و اتحادیه اقتصادی اوراسیا (EAEU)، برای [محصول] چه تعرفه ترجیحی در [کشور] اعمال می‌شود؟ این تعرفه را با تعرفه عادی مقایسه کن و بگو آیا صرفه‌جویی قابل توجه است؟'},
+            {category:'قوانین و گواهی‌ها',title:'مراحل اخذ گواهی EAC برای محصولات صنعتی',description:'راهنمای گام‌به‌گام دریافت گواهی EAC',text:'برای صادرات [محصول صنعتی] به روسیه و کشورهای EAEU، مراحل اخذ گواهی EAC را به‌طور کامل توضیح بده. شامل: مدارک مورد نیاز، آزمایشگاه‌های معتبر، زمان تقریبی، هزینه‌ها، و نکات کلیدی برای تسریع فرآیند.'},
+            {category:'قوانین و گواهی‌ها',title:'الزامات تست کیفیت و بهداشتی',description:'استانداردهای کیفیت و سلامت محصول',text:'برای [محصول] در بازار [کشور]، چه استانداردهای کیفیت و بهداشتی اجباری هستند؟ نحوه انجام تست‌های مورد نیاز، آزمایشگاه‌های معتبر، و هزینه‌ها را توضیح بده.'},
+            {category:'قیمت‌گذاری',title:'محاسبه قیمت نهایی صادراتی',description:'تعیین قیمت بر اساس اینکوترمز و هزینه‌ها',text:'می‌خواهم [محصول] را بر اساس اینکوترمز [FOB/CIF/DAP] به [کشور] صادر کنم. لطفاً فرمول محاسبه قیمت نهایی برای خریدار را توضیح بده و با فرض هزینه تولید X، حمل Y، بیمه Z و تعرفه T، یک مثال عددی حل کن.'},
+            {category:'قیمت‌گذاری',title:'استراتژی قیمت‌گذاری نفوذی یا رقابتی',description:'انتخاب رویکرد قیمت‌گذاری برای ورود به بازار',text:'برای ورود به بازار [کشور] با [محصول]، کدام استراتژی قیمت‌گذاری مناسب‌تر است: نفوذی (قیمت پایین برای جذب سریع) یا رقابتی (هم‌تراز با رقبا)؟ لطفاً مزایا و معایب هر کدام را با توجه به شرایط بازار تحلیل کن.'},
+            {category:'قیمت‌گذاری',title:'تحلیل حساسیت قیمت در بازار هدف',description:'بررسی واکنش خریداران به تغییر قیمت',text:'برای [محصول] در بازار [کشور]، حساسیت خریداران به تغییر قیمت را تحلیل کن. اگر قیمت را ۵٪، ۱۰٪ و ۱۵٪ افزایش دهم، چه تأثیری بر تقاضا خواهد داشت؟ آیا خریداران حاضر به پرداخت قیمت بالاتر برای کیفیت بهتر هستند؟'},
+            {category:'قیمت‌گذاری',title:'نمایش‌داده (Display) و بسته‌بندی در قیمت‌گذاری',description:'اثر اندازه سفارش و شرایط پرداخت بر قیمت',text:'برای [محصول]، چگونه می‌توانم قیمت‌های مختلفی برای MOQ (حداقل سفارش)، پیش‌پرداخت، و شرایط اعتباری پیشنهاد دهم؟ یک جدول قیمت‌گذاری سطحی ایجاد کن که تشویق‌کننده تر باشد.'},
+            {category:'مذاکره و فروش',title:'آماده‌سازی برای مذاکره حضوری یا آنلاین',description:'لیست نکات کلیدی و سؤالات احتمالی',text:'برای مذاکره با یک واردکننده [کشور] درباره [محصول]، ۵ سؤال احتمالی که آن‌ها خواهند پرسید را حدس بزن و برای هر کدام یک پاسخ قانع‌کننده آماده کن. همچنین ۳ نکته فرهنگی که باید رعایت کنم را بگو.'},
+            {category:'مذاکره و فروش',title:'نوشتن پیش‌فاکتور (Proforma Invoice)',description:'راهنمای تنظیم پیش‌فاکتور حرفه‌ای',text:'یک قالب پیش‌فاکتور (Proforma Invoice) برای صادرات [محصول] به [کشور] ارائه بده. چه اقلامی باید در آن باشد؟ لطفاً یک نمونه با مقادیر فرضی بنویس و توضیح بده هر بخش چه اهمیتی دارد.'},
+            {category:'مذاکره و فروش',title:'تکنیک‌های متقاعدسازی در فرهنگ روسی',description:'نکات روانشناختی و فرهنگی برای مذاکره با روس‌ها',text:'در مذاکره با خریداران روس، چه تکنیک‌های متقاعدسازی مؤثرتر است؟ به تفاوت‌های فرهنگی (سبک ارتباطی، تصمیم‌گیری، ساختار سلسله‌مراتبی) اشاره کن و یک استراتژی گام‌به‌گام برای مذاکره موفق ارائه بده.'},
+            {category:'مذاکره و فروس',title:'شرایط پرداخت و اعتبار تجاری',description:'تعیین شرایط فروش (پیش‌پرداخت، LC، اعتباری)',text:'برای فروش [محصول] به [کشور]، کدام شرایط پرداخت برای من مناسب‌تر است؟ (پیش‌پرداخت ۲۰٪، LC، اعتباری ۳۰ روز) هر شرط را از نظر ریسک، هزینه، و جذب خریدار تحلیل کن.'},
+            {category:'مذاکره و فروش',title:'نوشتن قرارداد و شرایط فروش',description:'ایجاد الگو برای قراردادهای تجاری',text:'یک قالب ساده قرارداد تجاری (Terms & Conditions) برای فروش [محصول] به خارج از کشور ارائه بده. شامل: کمیت، قیمت، شرایط پرداخت، تاریخ تحویل، مسئولیت بیمه و نقل، و حل اختلاف باشد.'},
+            {category:'پایش و توسعه',title:'تحلیل SWOT برای ورود به بازار',description:'شناسایی نقاط قوت، ضعف، فرصت‌ها و تهدیدها',text:'برای ورود به بازار [کشور] با [محصول]، یک تحلیل SWOT کامل انجام بده. نقاط قوت و ضعف داخلی شرکت من و فرصت‌ها و تهدیدهای خارجی را با توجه به شرایط سیاسی، اقتصادی و رقابتی مشخص کن.'},
+            {category:'پایش و توسعه',title:'برنامه ۹۰ روزه ورود به بازار',description:'برنامه اجرایی گام‌به‌گام برای شروع صادرات',text:'یک برنامه عملیاتی ۹۰ روزه برای ورود به بازار [کشور] با [محصول] تهیه کن. برنامه را به سه فاز ۳۰ روزه تقسیم کن و در هر فاز، اقدامات کلیدی، مسئولیت‌ها و معیارهای موفقیت را مشخص کن.'},
+            {category:'پایش و توسعه',title:'بررسی ریسک‌های سیاسی و اقتصادی',description:'شناسایی ریسک‌های کلان و راهکارهای کاهش',text:'برای صادرات به [کشور]، چه ریسک‌های سیاسی، اقتصادی و ارزی وجود دارد؟ برای هر ریسک، یک راهکار عملی برای کاهش اثر آن ارائه بده (مثلاً استفاده از ارز جایگزین، بیمه صادراتی، تنوع بازار).'},
+            {category:'پایش و توسعه',title:'برنامه تنوع‌بخشی به بازارهای هدف',description:'کاهش وابستگی به یک بازار خاص',text:'در حال حاضر به [کشور] صادرات دارم. برای کاهش ریسک، چه بازارهای جدیدی (در منطقه اوراسیا یا خاورمیانه) را هدف قرار دهم؟ یک برنامه تنوع‌بخشی با اولویت‌بندی بازارها بر اساس سهولت ورود و پتانسیل سود ارائه بده.'},
+            {category:'پایش و توسعه',title:'معیارهای سنجش و KPI برای صادرات',description:'تعریف شاخص‌های کلیدی عملکرد',text:'برای اندازه‌گیری موفقیت صادرات [محصول] به [کشور]، ۸ KPI اصلی را تعریف کن. شامل: درآمد، تعداد خریداران، مهلت زمانی تحویل، رضایت مشتری، و بازگشت سرمایه. برای هر KPI، هدف ۱۲ ماهه را مشخص کن.'},
+            {category:'تخصصی',title:'استراتژی صادرات پسته به چین',description:'فرصت‌ها و چالش‌های بازار چین برای پسته ایران',text:'برای صادرات پسته ایران به چین، یک استراتژی جامع تدوین کن. شامل: تحلیل تقاضا، رقبای اصلی (آمریکا، ترکیه)، تعرفه‌های گمرکی، الزامات بهداشتی، کانال‌های توزیع در چین، و بهترین زمان برای ورود به بازار.'},
+            {category:'تخصصی',title:'صادرات قیر به کشورهای CIS',description:'بررسی بازار قیر در روسیه، قزاقستان و ازبکستان',text:'بازار قیر را در سه کشور روسیه، قزاقستان و ازبکستان تحلیل کن. برای هر کشور: حجم واردات، مشخصات فنی مورد نیاز، رقبای اصلی، و فرصت‌های مناقصه‌های دولتی را بررسی کن. بهترین استراتژی ورود به هر بازار چیست؟'},
+            {category:'تخصصی',title:'صادرات مبلمان اداری به روسیه',description:'الزامات استاندارد و کانال‌های فروش',text:'برای صادرات مبلمان اداری به روسیه، چه الزامات استانداردی (GOST، EAC) وجود دارد؟ کانال‌های فروش اصلی (عمده‌فروشی، مناقصه‌های دولتی، فروش مستقیم به شرکت‌ها) کدامند و هر کدام چه مزایا و چالش‌هایی دارند؟'},
+            {category:'تخصصی',title:'ورود به بازار تجهیزات شهری در قزاقستان',description:'فرصت‌های مناقصه و پروژه‌های شهری',text:'بازار تجهیزات شهری (نیمکت، سطل زباله، تجهیزات بازی کودکان) در قزاقستان را تحلیل کن. پروژه‌های شهری در حال اجرا، نهادهای تصمیم‌گیرنده، الزامات فنی، و نحوه شرکت در مناقصه‌های دولتی را بررسی کن.'},
+            {category:'تخصصی',title:'صادرات لبنیات و محصولات پروتئینی',description:'الزامات بهداشتی و تسهیلات برای محصولات حیوانی',text:'برای صادرات [محصول لبنی] به [کشور]، الزامات بهداشتی و گواهی‌های لازم (مانند Health Certificate) را توضیح بده. تسهیلات و سفته‌های دریافتی مورد نیاز را مشخص کن.'},
+            {category:'مالی و ارزی',title:'مدیریت ریسک ارزی در صادرات',description:'راهکارهای کاهش ریسک نوسانات ارزی',text:'برای صادرات به [کشور] با ارز [ارز محلی/دلار/یورو]، چه راهکارهایی برای مدیریت ریسک نوسانات ارزی وجود دارد؟ قراردادهای ارزی، صندوق‌های پوشش ریسک، و استفاده از ارزهای دیجیتال یا پایدار را بررسی کن.'},
+            {category:'مالی و ارزی',title:'سیستم‌های پرداخت بین‌المللی برای صادرات',description:'مقایسه روش‌های پرداخت امن برای صادرات',text:'برای صادرات [محصول] به [کشور]، چه روش‌های پرداخت بین‌المللی امن‌تر و کارآمدتر هستند؟ LC (اعتبار اسنادی)، پیش‌پرداخت، و روش‌های جایگزین مانند سواپ یا پرداخت از طریق کشورهای ثالث را مقایسه کن.'},
+            {category:'مالی و ارزی',title:'تأمین مالی صادرات و ابزارهای بانکی',description:'انتخاب محصولات بانکی برای تأمین مالی صادرات',text:'برای تأمین مالی صادرات [محصول]، چه ابزارهای بانکی در دسترس هستند؟ (سفته تحت بدهکاری صادرات، فاکتورینگ، تسهیل‌های بانکی) هر ابزار را از نظر ریسک و هزینه مقایسه کن.'},
+            {category:'مالی و ارزی',title:'بیمه صادرات و پوشش ریسک‌های خارجی',description:'ابزارهای بیمه‌ای برای محافظت از ریسک‌های صادراتی',text:'برای صادرات [محصول]، چه انواع بیمه‌ای در دسترس است؟ (بیمه حمل‌ونقل، بیمه عدم پرداخت، بیمه ارزی) برای هر بیمه، پوشش، شرایط، و هزینه تقریبی را توضیح بده.'},
+            {category:'فرهنگی',title:'آداب کسب‌وکار در روسیه',description:'نکات فرهنگی برای ارتباط مؤثر با روس‌ها',text:'در تعاملات تجاری با روس‌ها، چه آداب و رسومی را باید رعایت کنم؟ سبک ارتباطی، نحوه احوال‌پرسی، مدیریت زمان، ساختار جلسات، و تابوهای فرهنگی را توضیح بده تا بتوانم ارتباط مؤثرتری برقرار کنم.'},
+            {category:'فرهنگی',title:'آداب کسب‌وکار در کشورهای آسیای میانه',description:'تفاوت‌های فرهنگی در قزاقستان، ازبکستان و تاجیکستان',text:'برای مذاکره و ارتباط با خریداران در قزاقستان، ازبکستان و تاجیکستان، چه تفاوت‌های فرهنگی مهمی وجود دارد؟ سبک تصمیم‌گیری، روابط شخصی، نحوه احوال‌پرسی، و هدایای تجاری را بررسی کن.'},
+            {category:'فرهنگی',title:'ترجمه و لطافت در ارتباطات B2B',description:'اهمیت ترجمه دقیق و ارتباط مؤثر',text:'برای ارتباطات B2B با [کشور]، اهمیت ترجمه دقیق و تعامل پذیر را توضیح بده. چه اشتباهات ترجمه‌ای متداول در صادرات وجود دارند و چگونه می‌توانم از آن‌ها جلوگیری کنم؟'},
+            {category:'استراتژی',title:'استراتژی ورود به بازار ارمنستان',description:'فرصت‌های صادراتی در ارمنستان برای محصولات ایرانی',text:'بازار ارمنستان را برای صادرات [محصول] تحلیل کن. حجم واردات، تعرفه‌ها، توافقات تجاری دوجانبه، رقبای اصلی، و بهترین کانال‌های توزیع را بررسی کن. همچنین مزیت رقابتی ایران در این بازار را مشخص کن.'},
+            {category:'استراتژی',title:'برنامه بازاریابی صادراتی یکپارچه',description:'ترکیب تبلیغات، محتوا و روابط عمومی',text:'یک برنامه بازاریابی صادراتی یکپارچه برای [محصول] در بازار [کشور] طراحی کن. شامل: ترکیب تبلیغات دیجیتال، تولید محتوا، روابط عمومی، شرکت در نمایشگاه‌ها، و همکاری با اینفلوئنسرهای صنعتی. بودجه تقریبی و جدول زمانی را هم مشخص کن.'},
+            {category:'استراتژی',title:'استراتژی شرکت در نمایشگاه‌های بین‌المللی',description:'برنامه عملیاتی برای شرکت موثر در نمایشگاه',text:'برای شرکت موثر در نمایشگاه [نام نمایشگاه] در [کشور]، یک برنامه عملیاتی جامع ارائه بده. شامل: انتخاب لوکیشن غرفه، طراحی بنرها، آماده‌سازی نمونه، ریکروتمنت تیم، و استراتژی جذب بازدیدکنندگان.'},
+            {category:'استراتژی',title:'فروش مستقیم vs توزیع‌کننده',description:'انتخاب بهترین کانال توزیع برای صادرات',text:'برای [محصول] در بازار [کشور]، کدام کانال توزیع بهتر است: فروش مستقیم به خریداران نهایی، یا استفاده از توزیع‌کننده محلی؟ مزایا، معایب، و هزینه‌های هر کانال را مقایسه کن.'},
+            {category:'گمرک و تعرفه',title:'طبقه‌بندی HS و تعرفه‌های ترجیحی',description:'شناسایی کد HS صحیح و تعرفه‌های قابل اعمال',text:'برای [محصول]، کد HS دقیق را مشخص کن. سپس تعرفه واردات به [کشور] را بر اساس توافقات تجاری (EAEU، WTO و غیره) محاسبه کن. اگر تعرفه ترجیحی وجود دارد، شرایط استفاده از آن را توضیح بده.'},
+            {category:'گمرک و تعرفه',title:'رویه‌های گمرکی در روسیه',description:'مراحل ترخیص کالا در گمرک روسیه',text:'مراحل ترخیص کالا از گمرک روسیه را برای [محصول] توضیح بده. مدارک مورد نیاز، زمان تقریبی، هزینه‌ها، و نقش کارگزار گمرکی را مشخص کن. همچنین نکات کلیدی برای جلوگیری از تأخیر را بگو.'},
+            {category:'گمرک و تعرفه',title:'اعتراض به تعرفه و احتیاجات گمرکی',description:'روند اعتراض به تعرفه‌های بالا یا نامعادل',text:'اگر تعرفه برای [محصول] در [کشور] بیشتر از انتظار باشد، چه روند اعتراضی در دسترس است؟ سازمان‌های مربوط، مدارک لازم، و احتمالات موفقیت را توضیح بده.'},
+            {category:'بازاریابی مسئول',title:'بازاریابی پایدار و اخلاقی در صادرات',description:'تأکید بر ارزش‌های اخلاقی و پایداری',text:'برای [محصول]، چگونه می‌توانم با تأکید بر پایداری، کیفیت اخلاقی، و مسئولیت‌پذیری اجتماعی، خود را از رقبا متمایز کنم؟ نمونه‌هایی از پیام‌های بازاریابی پایدار ارائه بده.'},
+            {category:'بازاریابی مسئول',title:'گواهی‌های پایداری و تأثیر اجتماعی',description:'استفاده از گواهی‌های محیطی و اجتماعی',text:'برای [محصول]، چه گواهی‌هایی برای اثبات تعهد به پایداری و اخلاقیات تولید وجود دارد؟ (مثلاً Organic، Fair Trade، Carbon Neutral) هر گواهی را از نظر اعتبار و اثر بازاریابی تحلیل کن.'}
         ];
 
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1062,6 +1373,10 @@
         let apiKey = localStorage.getItem('deepseek_api_key') || '';
 
         document.getElementById('api-key-input').value = apiKey;
+
+        // Load buyers from localStorage
+        let buyersData = JSON.parse(localStorage.getItem('kian_buyers') || '[]');
+        renderBuyersList();
 
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         //  API KEY
@@ -1091,7 +1406,7 @@
         }
 
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        //  GALLERY
+        //  GALLERY (Prompts)
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
         function openPromptsGallery() {
@@ -1102,6 +1417,12 @@
             GALLERY_PROMPTS.forEach((p) => {
                 const card = document.createElement('div');
                 card.className = 'prompt-card';
+                
+                // Add featured class for popular prompts
+                if (p.category.includes('⭐')) {
+                    card.classList.add('featured');
+                }
+                
                 card.innerHTML = `
                     <span class="category-tag">${p.category}</span>
                     <div class="prompt-title">${p.title}</div>
@@ -1125,6 +1446,91 @@
         document.getElementById('prompts-gallery-overlay').addEventListener('click', function(e) {
             if (e.target === this) closePromptsGallery();
         });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  BUYERS MODAL
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function openBuyersModal() {
+            document.getElementById('buyers-modal-overlay').classList.add('active');
+            renderBuyersList();
+        }
+
+        function closeBuyersModal() {
+            document.getElementById('buyers-modal-overlay').classList.remove('active');
+        }
+
+        document.getElementById('buyers-modal-overlay').addEventListener('click', function(e) {
+            if (e.target === this) closeBuyersModal();
+        });
+
+        function clearBuyerForm() {
+            document.getElementById('buyer-name').value = '';
+            document.getElementById('buyer-company').value = '';
+            document.getElementById('buyer-country').value = '';
+            document.getElementById('buyer-product').value = '';
+            document.getElementById('buyer-email').value = '';
+            document.getElementById('buyer-phone').value = '';
+            document.getElementById('buyer-notes').value = '';
+        }
+
+        function saveBuyer() {
+            const name = document.getElementById('buyer-name').value.trim();
+            if (!name) {
+                alert('نام خریدار الزامی است.');
+                return;
+            }
+
+            const buyer = {
+                id: Date.now(),
+                name: name,
+                company: document.getElementById('buyer-company').value.trim(),
+                country: document.getElementById('buyer-country').value.trim(),
+                product: document.getElementById('buyer-product').value.trim(),
+                email: document.getElementById('buyer-email').value.trim(),
+                phone: document.getElementById('buyer-phone').value.trim(),
+                notes: document.getElementById('buyer-notes').value.trim(),
+                createdAt: new Date().toISOString()
+            };
+
+            buyersData.push(buyer);
+            localStorage.setItem('kian_buyers', JSON.stringify(buyersData));
+            clearBuyerForm();
+            renderBuyersList();
+        }
+
+        function deleteBuyer(id) {
+            if (confirm('آیا از حذف این خریدار مطمئن هستید؟')) {
+                buyersData = buyersData.filter(b => b.id !== id);
+                localStorage.setItem('kian_buyers', JSON.stringify(buyersData));
+                renderBuyersList();
+            }
+        }
+
+        function renderBuyersList() {
+            const container = document.getElementById('buyers-list-container');
+            if (buyersData.length === 0) {
+                container.innerHTML = '<div class="empty-buyers">هیچ خریداری ثبت نشده است. فرم بالا را پر کنید.</div>';
+                return;
+            }
+
+            container.innerHTML = '';
+            buyersData.forEach(buyer => {
+                const card = document.createElement('div');
+                card.className = 'buyer-card';
+                card.innerHTML = `
+                    <div class="buyer-name">${buyer.name}</div>
+                    ${buyer.company ? `<div class="company">${buyer.company}</div>` : ''}
+                    ${buyer.country ? `<div class="detail-row"><span>کشور:</span><span>${buyer.country}</span></div>` : ''}
+                    ${buyer.product ? `<div class="detail-row"><span>محصول:</span><span>${buyer.product}</span></div>` : ''}
+                    ${buyer.email ? `<div class="detail-row"><span>ایمیل:</span><span>${buyer.email}</span></div>` : ''}
+                    ${buyer.phone ? `<div class="detail-row"><span>تلفن:</span><span>${buyer.phone}</span></div>` : ''}
+                    ${buyer.notes ? `<div class="notes">${buyer.notes}</div>` : ''}
+                    <button class="delete-btn" onclick="deleteBuyer(${buyer.id})">حذف</button>
+                `;
+                container.appendChild(card);
+            });
+        }
 
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         //  FILES
@@ -1202,6 +1608,22 @@
             container.scrollTop = container.scrollHeight;
         }
 
+        function toggleMoreActions() {
+            const menu = document.getElementById('more-actions-menu');
+            if (!menu) return;
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('more-actions-menu');
+            const moreBtn = document.querySelector('.btn-more');
+            if (!menu || !moreBtn) return;
+            if (!menu.contains(e.target) && !moreBtn.contains(e.target)) {
+                menu.style.display = 'none';
+            }
+        });
+
         async function sendMessage() {
             const input = document.getElementById('user-input');
             const userText = input.value.trim();
@@ -1210,6 +1632,10 @@
                 alert('لطفاً ابتدا کلید API دیپ‌سیک را وارد و ذخیره کنید.');
                 return;
             }
+
+            // Close menu if open
+            const menu = document.getElementById('more-actions-menu');
+            if (menu) menu.style.display = 'none';
 
             let displayText = userText;
             if (uploadedFilesData.length > 0) {
@@ -1321,6 +1747,87 @@
             win.focus();
             win.print();
         }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  EXPORT/IMPORT SESSION
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function exportSessionAsJSON() {
+            const sessionData = {
+                exportDate: new Date().toISOString(),
+                apiKey: apiKey, // Note: Include API key for convenience (user should be aware)
+                chatHistory: chatHistory,
+                buyersData: buyersData,
+                appVersion: '1.0'
+            };
+
+            const dataStr = JSON.stringify(sessionData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `kian-session-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+
+            alert('✅ جلسه با موفقیت ذخیره شد!');
+        }
+
+        // Handle session import
+        document.getElementById('session-import').addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            try {
+                const fileContent = await file.text();
+                const sessionData = JSON.parse(fileContent);
+
+                // Validate session data structure
+                if (!sessionData.chatHistory || !sessionData.buyersData) {
+                    throw new Error('فرمت فایل نامعتبر است.');
+                }
+
+                // Confirm restore
+                if (!confirm('آیا می‌خواهید جلسه قبلی را بازیابی کنید؟\n\nتمام پیام‌های فعلی جایگزین خواهند شد.')) {
+                    return;
+                }
+
+                // Restore data
+                if (sessionData.apiKey) {
+                    apiKey = sessionData.apiKey;
+                    document.getElementById('api-key-input').value = apiKey;
+                    localStorage.setItem('deepseek_api_key', apiKey);
+                }
+
+                // Clear current chat
+                const chatContainer = document.getElementById('chat-container');
+                chatContainer.innerHTML = '';
+
+                // Restore chat history
+                chatHistory = sessionData.chatHistory;
+
+                // Render all messages from history (skip system message)
+                for (let i = 1; i < chatHistory.length; i++) {
+                    const msg = chatHistory[i];
+                    if (msg.role === 'user' || msg.role === 'assistant') {
+                        addMessage(msg.role, msg.content);
+                    }
+                }
+
+                // Restore buyers data
+                buyersData = sessionData.buyersData || [];
+                localStorage.setItem('kian_buyers', JSON.stringify(buyersData));
+                renderBuyersList();
+
+                alert('✅ جلسه با موفقیت بازیابی شد!');
+            } catch (error) {
+                alert(`❌ خطا در بارگذاری فایل: ${error.message}`);
+                console.error(error);
+            }
+
+            // Reset file input
+            this.value = '';
+        });
 
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         //  MODAL (راهنما)
