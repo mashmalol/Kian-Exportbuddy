@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>دستیار صادرات کیان | Kian Export Assistant</title>
+
+    <!-- PDF & Excel parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js">
+    </script>
+
+    <style>
+        /* ── Reset & Base ── */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #0a1628;
+            --navy-light: #1a2a4a;
+            --navy-mid: #2a4a7a;
+            --gold: #c9a84c;
+            --gold-light: #e0c66a;
+            --gold-dim: #b8973a;
+            --bg: #f2f4f8;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.10);
+            --radius: 10px;
+            --radius-sm: 6px;
+            --transition: 0.2s ease;
+        }
+
+        body {
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            line-height: 1.6;
+        }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--navy-mid);
+            border-radius: 4px;
+        }
+
+        /* ── Header ── */
+        .header {
+            background: var(--navy);
+            color: #fff;
+            padding: 0.8rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.20);
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-brand .brand-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--gold);
+            color: var(--navy);
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .header-brand .brand-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .header-brand .brand-name span {
+            color: var(--gold);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .api-key-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.07);
+            padding: 4px 10px 4px 4px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .api-key-group input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            outline: none;
+            width: 160px;
+            padding: 5px 8px;
+            font-size: 0.8rem;
+            font-family: inherit;
+        }
+        .api-key-group input::placeholder {
+            color: rgba(255, 255, 255, 0.45);
+        }
+        .api-key-group input:focus {
+            border-bottom: 1px solid var(--gold);
+        }
+
+        .api-key-group .btn-save-key {
+            background: var(--gold);
+            border: none;
+            color: var(--navy);
+            border-radius: 20px;
+            padding: 3px 14px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.7rem;
+            font-family: inherit;
+            transition: var(--transition);
+            letter-spacing: 0.3px;
+        }
+        .api-key-group .btn-save-key:hover {
+            background: var(--gold-light);
+        }
+
+        .btn-help {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            font-family: inherit;
+            background: var(--gold);
+            color: var(--navy);
+            border-color: var(--gold);
+        }
+        .btn-help:hover {
+            background: var(--gold-light);
+            border-color: var(--gold-light);
+            transform: scale(1.05);
+        }
+
+        /* ── Quick Actions ── */
+        .quick-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            padding: 0.5rem 2rem;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .quick-btn {
+            background: #f1f4f9;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 5px 14px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: inherit;
+            transition: var(--transition);
+            color: var(--text-secondary);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .quick-btn:hover {
+            background: var(--navy);
+            color: #fff;
+            border-color: var(--navy);
+        }
+        .quick-btn.gallery-btn {
+            background: var(--gold);
+            color: var(--navy);
+            border-color: var(--gold);
+            font-weight: 600;
+        }
+        .quick-btn.gallery-btn:hover {
+            background: var(--gold-dim);
+            border-color: var(--gold-dim);
+            color: var(--navy);
+        }
+
+        /* ── Chat Container ── */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: var(--bg);
+        }
+
+        .message {
+            max-width: 78%;
+            padding: 14px 18px;
+            border-radius: var(--radius);
+            line-height: 1.7;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            font-size: 0.95rem;
+        }
+        .message.user {
+            align-self: flex-start;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+        .message.assistant {
+            align-self: flex-end;
+            background: var(--navy);
+            color: #fff;
+        }
+        .message .sender {
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 0.75rem;
+            opacity: 0.7;
+            letter-spacing: 0.3px;
+        }
+        .message.assistant .sender {
+            color: var(--gold);
+            opacity: 1;
+        }
+        .message.user .sender {
+            color: var(--text-muted);
+        }
+
+        .message .msg-time {
+            font-size: 0.65rem;
+            opacity: 0.5;
+            margin-top: 6px;
+            text-align: left;
+        }
+
+        /* ── Input Area ── */
+        .input-area {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 0.8rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .input-area .input-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 200px;
+        }
+
+        .input-area textarea {
+            width: 100%;
+            min-height: 48px;
+            max-height: 120px;
+            resize: vertical;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+            background: var(--bg);
+            color: var(--text);
+        }
+        .input-area textarea:focus {
+            border-color: var(--navy-mid);
+            background: var(--surface);
+            box-shadow: 0 0 0 3px rgba(26, 42, 74, 0.08);
+        }
+
+        .input-area .actions-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 8px 18px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            font-family: inherit;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .btn:hover {
+            background: var(--navy-light);
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: var(--navy);
+        }
+        .btn-gold:hover {
+            background: var(--gold-dim);
+            color: var(--navy);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+        .btn-outline:hover {
+            background: var(--bg);
+            border-color: var(--text-muted);
+        }
+
+        .file-label {
+            background: var(--bg);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .file-label:hover {
+            background: #e8ecf2;
+            border-color: var(--text-muted);
+        }
+        #file-input {
+            display: none;
+        }
+
+        .file-chips {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            width: 100%;
+            padding-top: 4px;
+        }
+        .file-chip {
+            background: #f1f4f9;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3px 12px;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+        }
+        .file-chip .remove-file {
+            cursor: pointer;
+            font-weight: 700;
+            color: #b91c1c;
+            font-size: 0.9rem;
+            line-height: 1;
+        }
+        .file-chip .remove-file:hover {
+            color: #7f1d1d;
+        }
+
+        /* ── Modals ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.50);
+            z-index: 30;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--surface);
+            width: 100%;
+            max-width: 820px;
+            max-height: 85vh;
+            overflow-y: auto;
+            border-radius: var(--radius);
+            padding: 2rem 2.2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .modal .modal-close {
+            position: sticky;
+            top: 0;
+            float: left;
+            background: #e5e9f0;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .modal .modal-close:hover {
+            background: #cbd5e1;
+            color: #000;
+        }
+
+        .modal h2 {
+            color: var(--navy);
+            margin-bottom: 1.2rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .modal h3 {
+            color: var(--navy);
+            margin: 1.2rem 0 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .modal p,
+        .modal li {
+            line-height: 1.8;
+            margin-bottom: 0.4rem;
+            color: var(--text-secondary);
+        }
+        .modal ul {
+            padding-right: 1.5rem;
+        }
+        .modal a {
+            color: var(--navy-mid);
+            text-decoration: underline;
+        }
+        .modal a:hover {
+            color: var(--gold-dim);
+        }
+
+        /* Prompt Gallery grid */
+        .prompt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
+            margin-top: 1rem;
+        }
+
+        .prompt-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .prompt-card:hover {
+            background: #eef2f7;
+            border-color: var(--navy-mid);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .prompt-card .category-tag {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--navy);
+            border-radius: 12px;
+            padding: 1px 10px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            margin-bottom: 6px;
+        }
+        .prompt-card .prompt-title {
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 3px;
+            font-size: 0.9rem;
+        }
+        .prompt-card .prompt-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 700px) {
+            .header {
+                padding: 0.6rem 1rem;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.5rem;
+            }
+            .header-actions {
+                flex-wrap: wrap;
+            }
+            .api-key-group {
+                width: 100%;
+            }
+            .api-key-group input {
+                width: 100%;
+            }
+
+            .quick-actions {
+                padding: 0.4rem 1rem;
+                gap: 4px;
+            }
+            .quick-btn {
+                font-size: 0.7rem;
+                padding: 4px 10px;
+            }
+
+            .chat-container {
+                padding: 1rem;
+            }
+            .message {
+                max-width: 92%;
+                font-size: 0.9rem;
+                padding: 10px 14px;
+            }
+
+            .input-area {
+                padding: 0.6rem 1rem;
+                flex-direction: column;
+            }
+            .input-area .actions-row {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .btn {
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
+
+            .modal {
+                padding: 1.2rem;
+            }
+            .prompt-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-brand .brand-name {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .header-brand .brand-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+            .header-brand .brand-name {
+                font-size: 0.9rem;
+            }
+            .api-key-group input {
+                font-size: 0.7rem;
+            }
+            .btn-help {
+                width: 30px;
+                height: 30px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── HEADER ─── -->
+    <header class="header">
+        <div class="header-brand">
+            <div class="brand-icon">K</div>
+            <div class="brand-name">دستیار <span>صادرات</span> کیان</div>
+        </div>
+        <div class="header-actions">
+            <div class="api-key-group">
+                <input type="password" id="api-key-input" placeholder="کلید API دیپ‌سیک" />
+                <button class="btn-save-key" onclick="saveApiKey()">ذخیره</button>
+            </div>
+            <button class="btn-help" onclick="openModal()" title="راهنما">؟</button>
+        </div>
+    </header>
+
+    <!-- ─── QUICK ACTIONS ─── -->
+    <div class="quick-actions">
+        <button class="quick-btn" onclick="insertQuickPrompt('market')">تحلیل بازار</button>
+        <button class="quick-btn" onclick="insertQuickPrompt('email')">ایمیل سرد</button>
+        <button class="quick-btn" onclick="insertQuickPrompt('keywords')">کلمات کلیدی</button>
+        <button class="quick-btn" onclick="insertQuickPrompt('buyers')">لیست خریداران</button>
+        <button class="quick-btn gallery-btn" onclick="openPromptsGallery()">گالری پرامپت‌ها</button>
+    </div>
+
+    <!-- ─── CHAT ─── -->
+    <div class="chat-container" id="chat-container">
+        <div class="message assistant">
+            <div class="sender">کیان</div>
+            سلام! من کیان هستم، استراتژیست ارشد صادرات شما. لطفاً ابتدا کلید API دیپ‌سیک خود را در بالا وارد کنید، سپس سؤالات خود را بپرسید. می‌توانید فایل‌های PDF، اکسل و متنی را نیز بارگذاری کنید تا تحلیل دقیق‌تری انجام دهم.
+        </div>
+    </div>
+
+    <!-- ─── INPUT AREA ─── -->
+    <div class="input-area">
+        <div class="input-wrapper">
+            <textarea id="user-input" placeholder="پیام خود را بنویسید..." rows="2"></textarea>
+            <div class="file-chips" id="file-chips"></div>
+        </div>
+        <div class="actions-row">
+            <label for="file-input" class="file-label">پیوست فایل</label>
+            <input type="file" id="file-input" multiple accept=".pdf,.xlsx,.xls,.csv,.txt,.doc,.docx" />
+            <button class="btn" onclick="sendMessage()">ارسال</button>
+            <button class="btn btn-gold" onclick="exportChat()">خروجی</button>
+        </div>
+    </div>
+
+    <!-- ─── MODAL: راهنما ─── -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <h2>راهنمای جامع دستیار صادرات کیان</h2>
+
+            <p><strong>سلام بر تیم صادرات عزیز!</strong> این دستیار هوش مصنوعی به‌ویژه برای کمک به شما در صادرات کالا از ایران به کشورهای اوراسیا، روسیه و آسیای میانه طراحی شده است.</p>
+
+            <h3>شخصیت دستیار (کیان)</h3>
+            <p>کیان یک استراتژیست ارشد صادرات با ۲۰ سال تجربه است. او با ابزارهایی مانند ITC Export Potential Map، Trade Map و Market Access Map کار می‌کند و تحلیل‌های عمیقی ارائه می‌دهد. حوزه‌های تخصصی او:</p>
+            <ul>
+                <li>محصولات غذایی (پسته، زعفران، خرما، رب گوجه و...)</li>
+                <li>پتروشیمی و مشتقات نفتی (قیر، پلیمر، روغن پایه و...)</li>
+                <li>مبلمان اداری و مدرسه</li>
+                <li>تجهیزات شهری و بازی کودکان</li>
+            </ul>
+
+            <h3>تنظیم کلید API دیپ‌سیک</h3>
+            <p>برای استفاده از دستیار، باید کلید API دیپ‌سیک خود را وارد کنید. این کلید به‌صورت امن در مرورگر شما ذخیره می‌شود و فقط برای ارسال درخواست به سرور دیپ‌سیک استفاده می‌شود. برای دریافت کلید، به <a href="https://platform.deepseek.com/" target="_blank">سایت دیپ‌سیک</a> مراجعه کنید.</p>
+
+            <h3>بارگذاری فایل‌ها</h3>
+            <p>می‌توانید فایل‌های PDF، اکسل (xlsx, xls)، فایل‌های متنی و CSV را پیوست کنید. محتوای این فایل‌ها استخراج شده و به پیام شما اضافه می‌شود تا کیان بتواند بر اساس آن‌ها تحلیل کند. این قابلیت برای بررسی لیست محصولات، داده‌های تعرفه‌ای، یا اسناد گمرکی بسیار مفید است.</p>
+
+            <h3>نحوه استفاده</h3>
+            <p>۱. کلید API را وارد و ذخیره کنید.</p>
+            <p>۲. در صورت نیاز فایل‌های خود را پیوست کنید.</p>
+            <p>۳. سؤال یا درخواست خود را به فارسی یا انگلیسی بنویسید و ارسال کنید.</p>
+            <p>۴. کیان با توجه به شخصیت و دستورالعمل‌های تعریف‌شده، پاسخ تحلیلی و راهبردی ارائه می‌دهد.</p>
+
+            <h3>نمونه سؤالات</h3>
+            <ul>
+                <li>«بازار صادرات پسته ایران به قزاقستان و روسیه را مقایسه کن.»</li>
+                <li>«برای صادرات مبلمان اداری به روسیه چه گواهی‌هایی لازم است؟»</li>
+                <li>«یک ایمیل سرد به زبان روسی برای معرفی قیر ایران به یک شرکت ساختمانی بنویس.»</li>
+            </ul>
+
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-top:1rem;">
+                <strong>توجه:</strong> این دستیار فقط برای مشاوره تجاری و بازاریابی طراحی شده است. از دادن اطلاعات محرمانه یا غیرمجاز خودداری کنید.
+            </p>
+        </div>
+    </div>
+
+    <!-- ─── MODAL: گالری پرامپت‌ها ─── -->
+    <div class="modal-overlay" id="prompts-gallery-overlay">
+        <div class="modal">
+            <button class="modal-close" onclick="closePromptsGallery()">✕</button>
+            <h2>گالری پرامپت‌های آماده</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">
+                برای استفاده، روی هر کارت کلیک کنید تا متن پرامپت در کادر پیام قرار گیرد. سپس بخش‌های داخل [ ] را با اطلاعات خود جایگزین کنید.
+            </p>
+            <div id="prompt-list" class="prompt-grid"></div>
+        </div>
+    </div>
+
+    <script>
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  CONFIGURATION
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        const DEEPSEEK_API_URL = 'https://api.deepseek.com/chat/completions';
+        const MODEL = 'deepseek-chat';
+
+        const SYSTEM_PROMPT = `
+        شما "کیان" هستید، استراتژیست ارشد صادرات و هکر رشد B2B با ۲۰ سال تجربه در کمک به شرکت‌های کوچک و متوسط ایرانی برای صادرات کالا به اتحادیه اقتصادی اوراسیا (EAEU)، روسیه و آسیای میانه.
+
+        پروفایل شرکت من:
+        - مبدأ: ایران
+        - مدل کسب‌وکار: کاملاً B2B، عمده‌فروشی با حجم بالا و قراردادهای مناقصه‌ای.
+        - خطوط محصول اصلی:
+            ۱. مواد غذایی: پسته، زعفران، خرما، لبنیات، رب گوجه‌فرنگی، کنسانتره آب‌میوه.
+            ۲. پتروشیمی و مشتقات: روغن پایه، قیر، پلیمرها، روان‌کننده‌های صنعتی.
+            ۳. مبلمان: مبلمان اداری ارگونومیک با کیفیت بالا (میز، صندلی، پارتیشن) و مبلمان مدرسه.
+            ۴. تجهیزات شهری: تجهیزات بازی کودکان، نیمکت پارک، ایستگاه‌های بدنسازی فضای باز.
+        - لجستیک: عمدتاً از طریق کریدور حمل‌ونقل بین‌المللی شمال-جنوب (INSTC)، حمل‌ونقل دریایی خزر و ریلی.
+
+        ابزار و روش‌شناسی شما:
+        - همیشه کدهای HS مرتبط را شناسایی کنید (مثلاً HS 0802 برای پسته، HS 2713 برای قیر).
+        - تحلیل شکاف عرضه و تقاضا انجام دهید.
+        - منطق تعرفه‌ای: توافقنامه تجارت آزاد موقت ایران و EAEU را در نظر بگیرید.
+
+        وظایف اصلی شما:
+        ۱. استراتژی ورود به بازار و فروش: تحلیل تقاضا، شخصیت خریدار B2B، رقبا، و پیش‌نویس ایمیل/پیام تماس.
+        ۲. سئو B2B و حضور دیجیتال: کلمات کلیدی با قصد تراکنشی در گوگل و یاندکس، ساختار صفحات محصول، پلتفرم‌های B2B محلی، ایده‌های محتوا.
+        ۳. تبلیغات و متن‌نویسی فرهنگی: تطبیق لحن با فرهنگ روسیه، قزاقستان، ارمنستان و غیره.
+        ۴. انطباق و مدیریت ریسک: مشاوره در مورد ارزها، سیستم‌های پرداخت، گواهی‌های لازم (EAC، حلال و...).
+
+        سبک اجرا: استفاده از قالب‌بندی واضح، جداول در صورت لزوم، پاسخ به فارسی یا انگلیسی بر اساس زبان کاربر.
+        هرگز در مورد دور زدن تحریم‌ها یا نهادهای تحریم‌شده مشاوره ندهید.`;
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  QUICK PROMPT TEMPLATES
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        const QUICK_PROMPTS = {
+            market: 'تحلیل بازار: لطفاً بازار [نام محصول] در [کشور مقصد] را تحلیل کن. تقاضا، رقبا، تعرفه‌ها و بهترین استراتژی ورود را بگو.',
+            email: 'ایمیل سرد: یک ایمیل معرفی کوتاه به زبان [زبان مقصد] برای [نام محصول] بنویس. لحن حرفه‌ای و متناسب با فرهنگ [کشور] باشد.',
+            keywords: 'کلمات کلیدی: برای [نام محصول] و بازار [کشور]، ۱۰ کلمه کلیدی B2B با قصد خرید در یاندکس/گوگل پیدا کن و نوع آن‌ها (تراکنشی یا محتوایی) را مشخص کن.',
+            buyers: 'لیست خریداران: برای [نام محصول] در [کشور]، سه گروه اصلی خریداران B2B را شناسایی کن و برای هر کدام یک روش تماس پیشنهاد بده.'
+        };
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  GALLERY PROMPTS  (40+ prompts)
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        const GALLERY_PROMPTS = [
+            // ── بازار ──
+            {
+                category: 'تحلیل بازار',
+                title: 'مقایسه دو بازار هدف',
+                description: 'مقایسه دو کشور برای یک محصول خاص از نظر تقاضا، رقابت و تعرفه',
+                text: 'لطفاً بازار [محصول] را در دو کشور [کشور ۱] و [کشور ۲] مقایسه کن. برای هر کشور: حجم تقاضا، نرخ رشد، رقبای اصلی، تعرفه واردات، و میزان سهولت ورود را مشخص کن. در پایان، کدام کشور برای شروع بهتر است و چرا؟'
+            }, {
+                category: 'تحلیل بازار',
+                title: 'تحلیل روند قیمت و حاشیه سود',
+                description: 'بررسی قیمت‌های عمده‌فروشی و محاسبه حاشیه سود تقریبی',
+                text: 'برای صادرات [محصول] به [کشور]، میانگین قیمت عمده‌فروشی این محصول در بازار مقصد چقدر است؟ با احتساب هزینه تولید، حمل، بیمه، تعرفه و مالیات، حاشیه سود خالص من چقدر خواهد بود؟ لطفاً یک جدول محاسبه ارائه بده.'
+            }, {
+                category: 'تحلیل بازار',
+                title: 'تحلیل پتانسیل صادرات به روسیه',
+                description: 'بررسی فرصت‌ها و چالش‌های بازار روسیه برای محصول شما',
+                text: 'برای صادرات [محصول] به روسیه، تحلیل جامعی از پتانسیل بازار انجام بده. شامل: حجم واردات روسیه در ۳ سال اخیر، رقبای اصلی (داخلی و خارجی)، تعرفه‌های گمرکی، الزامات گواهی (EAC)، و بهترین شهرهای هدف (مسکو، سن‌پترزبورگ، یا مناطق صنعتی).'
+            }, {
+                category: 'تحلیل بازار',
+                title: 'تحلیل بازار قزاقستان برای محصولات غذایی',
+                description: 'بررسی تقاضا و کانال‌های توزیع مواد غذایی در قزاقستان',
+                text: 'بازار محصولات غذایی در قزاقستان را برای [محصول خاص] تحلیل کن. تقاضا، عادات مصرف، کانال‌های توزیع اصلی (خرده‌فروشی، هتلداری، صنایع تبدیلی)، و الزامات بهداشتی و گواهی حلال را بررسی کن. همچنین قیمت‌های رقبا را مقایسه کن.'
+            }, {
+                category: 'تحلیل بازار',
+                title: 'فرصت‌های صادراتی در آسیای میانه',
+                description: 'بررسی کشورهای ازبکستان، تاجیکستان و ترکمنستان',
+                text: 'برای صادرات [محصول] به کشورهای آسیای میانه (ازبکستان، تاجیکستان، ترکمنستان)، یک تحلیل مقایسه‌ای انجام بده. برای هر کشور: حجم تقاضا، زیرساخت‌های حمل‌ونقل، تعرفه‌ها، و میزان رقابت را مشخص کن. کدام کشور بهترین پتانسیل را دارد؟'
+            },
+
+            // ── خریدار ──
+            {
+                category: 'شناسایی خریدار',
+                title: 'یافتن خریداران بالقوه در یک کشور',
+                description: 'شناسایی انواع واردکنندگان و کانال‌های تماس',
+                text: 'می‌خواهم [محصول] را به [کشور] صادر کنم. چه شرکت‌ها یا سازمان‌هایی خریدار بالقوه این محصول هستند؟ لطفاً دسته‌بندی کن (واردکننده، توزیع‌کننده، عمده‌فروش، زنجیره خرده‌فروشی، کارخانه فرآوری) و برای هر دسته، سه مثال واقعی یا روش پیدا کردن آن‌ها ارائه بده.'
+            }, {
+                category: 'شناسایی خریدار',
+                title: 'نوشتن ایمیل معرفی (Cold Email)',
+                description: 'ایمیل حرفه‌ای برای اولین تماس با خریدار خارجی',
+                text: 'یک ایمیل معرفی کوتاه (حداکثر ۱۵۰ کلمه) به زبان [زبان] برای معرفی [محصول] به یک [نوع خریدار، مثلاً واردکننده] بنویس. لحن باید حرفه‌ای، قابل اعتماد و متناسب با فرهنگ [کشور] باشد. در انتها یک دعوت به گفتگو (CTA) بگنجان.'
+            }, {
+                category: 'شناسایی خریدار',
+                title: 'پاسخ به اعتراضات رایج خریداران',
+                description: 'آماده‌سازی پاسخ برای نگرانی‌های خریداران',
+                text: 'خریداران در [کشور] ممکن است به دلیل تحریم‌ها، کیفیت، یا تأخیر در تحویل از خرید از ایران نگران باشند. برای هر یک از این سه نگرانی، یک پاسخ حرفه‌ای و متقاعدکننده بنویس که اعتماد ایجاد کند، بدون اشاره به دور زدن تحریم‌ها.'
+            }, {
+                category: 'شناسایی خریدار',
+                title: 'پروفایل خریدار B2B ایده‌آل',
+                description: 'تعیین مشخصات دقیق خریدار هدف شما',
+                text: 'برای [محصول] در بازار [کشور]، پروفایل خریدار B2B ایده‌آل را ترسیم کن. شامل: اندازه شرکت، محدوده درآمد سالانه، تعداد کارکنان، تصمیم‌گیرنده اصلی (مدیر خرید، مدیرعامل، مهندس)، و معیارهای اصلی خرید (قیمت، کیفیت، زمان تحویل، گواهی‌ها).'
+            },
+
+            // ── سئو و دیجیتال ──
+            {
+                category: 'سئو و بازاریابی دیجیتال',
+                title: 'تحقیق کلمات کلیدی B2B',
+                description: 'پیدا کردن کلمات کلیدی با قصد خرید برای سایت',
+                text: 'برای [محصول] در بازار [کشور]، ۱۰ کلمه کلیدی B2B که واردکنندگان جستجو می‌کنند پیدا کن. کلمات را به زبان [زبان] بنویس و نوع هر کلمه (تراکنشی، محتوایی، ناوبری) را مشخص کن. همچنین پیشنهاد بده کدام کلمات برای صفحه محصول و کدام برای مقاله وبلاگ مناسب‌ترند.'
+            }, {
+                category: 'سئو و بازاریابی دیجیتال',
+                title: 'ایده‌های محتوای وبلاگ برای جذب B2B',
+                description: 'ایده‌های مقاله برای اعتمادسازی و جذب مشتری',
+                text: 'برای جذب واردکنندگان و خریداران عمده [محصول] در [کشور]، ۷ ایده مقاله وبلاگ پیشنهاد بده که مشکلات واقعی آن‌ها را حل کند. برای هر ایده، عنوان و یک توضیح ۲-۳ جمله‌ای بنویس.'
+            }, {
+                category: 'سئو و بازاریابی دیجیتال',
+                title: 'بهینه‌سازی صفحه محصول برای B2B',
+                description: 'چک‌لیست سئو و اعتمادسازی صفحه محصول',
+                text: 'برای صفحه محصول [محصول] در وب‌سایت من، یک چک‌لیست کامل سئو (on-page) و عناصر اعتمادساز (مانند گواهی‌ها، MOQ، زمان تحویل، ضمانت‌ها) ارائه بده که باعث شود خریدار B2B راحت‌تر تصمیم بگیرد.'
+            }, {
+                category: 'سئو و بازاریابی دیجیتال',
+                title: 'استراتژی محتوایی برای لینکدین',
+                description: 'برنامه انتشار محتوا در لینکدین برای جذب واردکننده',
+                text: 'یک استراتژی محتوایی ۳۰ روزه برای لینکدین طراحی کن تا واردکنندگان [کشور] را جذب کنم. شامل: تعداد پست در هفته، موضوعات کلیدی، فرمت‌ها (متن، تصویر، ویدئو)، و نحوه تعامل با مخاطبان.'
+            },
+
+            // ── تبلیغات ──
+            {
+                category: 'تبلیغات',
+                title: 'متن تبلیغ یاندکس دایرکت',
+                description: 'تبلیغ کوتاه و هدفمند برای موتور جستجوی روسی',
+                text: 'یک متن تبلیغاتی برای یاندکس دایرکت (حداکثر ۸۰ کاراکتر عنوان و ۲۰۰ کاراکتر توضیح) برای [محصول] بنویس. لحن باید بر قابلیت اطمینان و قیمت رقابتی تأکید کند. سه نسخه متفاوت ارائه بده.'
+            }, {
+                category: 'تبلیغات',
+                title: 'کمپین لینکدین برای جذب واردکننده',
+                description: 'متن آگهی لینکدین برای مخاطبان B2B',
+                text: 'یک آگهی لینکدین (حداکثر ۱۵۰ کلمه) برای معرفی [محصول] به مدیران خرید و واردکنندگان [کشور] بنویس. از کلمات کلیدی مرتبط استفاده کن و یک پیشنهاد ویژه (مثلاً ارسال نمونه رایگان یا مشاوره) اضافه کن.'
+            }, {
+                category: 'تبلیغات',
+                title: 'بنر تبلیغاتی برای نمایشگاه بین‌المللی',
+                description: 'متن و پیام کلیدی برای بنر غرفه نمایشگاه',
+                text: 'برای حضور در نمایشگاه [نام نمایشگاه] در [کشور]، یک متن کوتاه و تأثیرگذار برای بنر غرفه (حداکثر ۵۰ کلمه) بنویس که مزیت رقابتی [محصول] را برجسته کند. همچنین ۳ شعار جایگزین پیشنهاد بده.'
+            },
+
+            // ── لجستیک ──
+            {
+                category: 'لجستیک و حمل‌ونقل',
+                title: 'انتخاب بهترین مسیر حمل',
+                description: 'مقایسه مسیرهای ریلی، دریایی خزر و جاده‌ای',
+                text: 'برای ارسال [محصول] از ایران به [کشور مقصد]، مسیرهای حمل ممکن (ریلی، دریایی خزر، جاده‌ای) را مقایسه کن. زمان تقریبی، هزینه نسبی و ریسک هر کدام را مشخص کن و در نهایت بهترین گزینه را با دلیل پیشنهاد بده.'
+            }, {
+                category: 'لجستیک و حمل‌ونقل',
+                title: 'مدارک و اسناد لازم برای صادرات',
+                description: 'فهرست کامل مدارک گمرکی و بانکی',
+                text: 'برای صادرات [محصول] به [کشور]، چه مدارکی لازم است؟ (مانند فاکتور تجاری، بارنامه، گواهی مبدأ، گواهی بهداشت، EAC و...) لطفاً فهرست کامل با توضیح کوتاه هر مدرک و مرجع صادرکننده ارائه بده.'
+            }, {
+                category: 'لجستیک و حمل‌ونقل',
+                title: 'بهینه‌سازی حمل از طریق کریدور شمال-جنوب',
+                description: 'استفاده از INSTC برای کاهش زمان و هزینه',
+                text: 'چگونه می‌توانم از کریدور حمل‌ونقل بین‌المللی شمال-جنوب (INSTC) برای صادرات [محصول] به [کشور] استفاده کنم؟ مسیرهای پیشنهادی، هزینه‌ها، زمان ترانزیت، و ریسک‌های هر مسیر را تحلیل کن.'
+            },
+
+            // ── قوانین ──
+            {
+                category: 'قوانین و گواهی‌ها',
+                title: 'گواهی‌های اجباری و اختیاری',
+                description: 'شناسایی استانداردها و مجوزهای لازم',
+                text: 'برای [محصول]، در بازار [کشور] چه گواهی‌ها و استانداردهایی اجباری است؟ (مثلاً EAC، حلال، GOST، ISO). نحوه دریافت و هزینه تقریبی هر کدام را توضیح بده.'
+            }, {
+                category: 'قوانین و گواهی‌ها',
+                title: 'بررسی توافق‌نامه تجاری ایران و EAEU',
+                description: 'مزایای تعرفه‌ای تحت موافقت‌نامه موقت',
+                text: 'بر اساس توافق‌نامه تجارت آزاد موقت ایران و اتحادیه اقتصادی اوراسیا (EAEU)، برای [محصول] چه تعرفه ترجیحی در [کشور] اعمال می‌شود؟ این تعرفه را با تعرفه عادی مقایسه کن و بگو آیا صرفه‌جویی قابل توجه است؟'
+            }, {
+                category: 'قوانین و گواهی‌ها',
+                title: 'مراحل اخذ گواهی EAC برای محصولات صنعتی',
+                description: 'راهنمای گام‌به‌گام دریافت گواهی EAC',
+                text: 'برای صادرات [محصول صنعتی] به روسیه و کشورهای EAEU، مراحل اخذ گواهی EAC را به‌طور کامل توضیح بده. شامل: مدارک مورد نیاز، آزمایشگاه‌های معتبر، زمان تقریبی، هزینه‌ها، و نکات کلیدی برای تسریع فرآیند.'
+            },
+
+            // ── قیمت‌گذاری ──
+            {
+                category: 'قیمت‌گذاری',
+                title: 'محاسبه قیمت نهایی صادراتی',
+                description: 'تعیین قیمت بر اساس اینکوترمز و هزینه‌ها',
+                text: 'می‌خواهم [محصول] را بر اساس اینکوترمز [FOB/CIF/DAP] به [کشور] صادر کنم. لطفاً فرمول محاسبه قیمت نهایی برای خریدار را توضیح بده و با فرض هزینه تولید X، حمل Y، بیمه Z و تعرفه T، یک مثال عددی حل کن.'
+            }, {
+                category: 'قیمت‌گذاری',
+                title: 'استراتژی قیمت‌گذاری نفوذی یا رقابتی',
+                description: 'انتخاب رویکرد قیمت‌گذاری برای ورود به بازار',
+                text: 'برای ورود به بازار [کشور] با [محصول]، کدام استراتژی قیمت‌گذاری مناسب‌تر است: نفوذی (قیمت پایین برای جذب سریع) یا رقابتی (هم‌تراز با رقبا)؟ لطفاً مزایا و معایب هر کدام را با توجه به شرایط بازار تحلیل کن.'
+            }, {
+                category: 'قیمت‌گذاری',
+                title: 'تحلیل حساسیت قیمت در بازار هدف',
+                description: 'بررسی واکنش خریداران به تغییر قیمت',
+                text: 'برای [محصول] در بازار [کشور]، حساسیت خریداران به تغییر قیمت را تحلیل کن. اگر قیمت را ۵٪، ۱۰٪ و ۱۵٪ افزایش دهم، چه تأثیری بر تقاضا خواهد داشت؟ آیا خریداران حاضر به پرداخت قیمت بالاتر برای کیفیت بهتر هستند؟'
+            },
+
+            // ── مذاکره ──
+            {
+                category: 'مذاکره و فروش',
+                title: 'آماده‌سازی برای مذاکره حضوری یا آنلاین',
+                description: 'لیست نکات کلیدی و سؤالات احتمالی',
+                text: 'برای مذاکره با یک واردکننده [کشور] درباره [محصول]، ۵ سؤال احتمالی که آن‌ها خواهند پرسید را حدس بزن و برای هر کدام یک پاسخ قانع‌کننده آماده کن. همچنین ۳ نکته فرهنگی که باید رعایت کنم را بگو.'
+            }, {
+                category: 'مذاکره و فروش',
+                title: 'نوشتن پیش‌فاکتور (Proforma Invoice)',
+                description: 'راهنمای تنظیم پیش‌فاکتور حرفه‌ای',
+                text: 'یک قالب پیش‌فاکتور (Proforma Invoice) برای صادرات [محصول] به [کشور] ارائه بده. چه اقلامی باید در آن باشد؟ لطفاً یک نمونه با مقادیر فرضی بنویس و توضیح بده هر بخش چه اهمیتی دارد.'
+            }, {
+                category: 'مذاکره و فروش',
+                title: 'تکنیک‌های متقاعدسازی در فرهنگ روسی',
+                description: 'نکات روانشناختی و فرهنگی برای مذاکره با روس‌ها',
+                text: 'در مذاکره با خریداران روس، چه تکنیک‌های متقاعدسازی مؤثرتر است؟ به تفاوت‌های فرهنگی (سبک ارتباطی، تصمیم‌گیری، ساختار سلسله‌مراتبی) اشاره کن و یک استراتژی گام‌به‌گام برای مذاکره موفق ارائه بده.'
+            },
+
+            // ── پایش و توسعه ──
+            {
+                category: 'پایش و توسعه',
+                title: 'تحلیل SWOT برای ورود به بازار',
+                description: 'شناسایی نقاط قوت، ضعف، فرصت‌ها و تهدیدها',
+                text: 'برای ورود به بازار [کشور] با [محصول]، یک تحلیل SWOT کامل انجام بده. نقاط قوت و ضعف داخلی شرکت من و فرصت‌ها و تهدیدهای خارجی را با توجه به شرایط سیاسی، اقتصادی و رقابتی مشخص کن.'
+            }, {
+                category: 'پایش و توسعه',
+                title: 'برنامه ۹۰ روزه ورود به بازار',
+                description: 'برنامه اجرایی گام‌به‌گام برای شروع صادرات',
+                text: 'یک برنامه عملیاتی ۹۰ روزه برای ورود به بازار [کشور] با [محصول] تهیه کن. برنامه را به سه فاز ۳۰ روزه تقسیم کن و در هر فاز، اقدامات کلیدی، مسئولیت‌ها و معیارهای موفقیت را مشخص کن.'
+            }, {
+                category: 'پایش و توسعه',
+                title: 'بررسی ریسک‌های سیاسی و اقتصادی',
+                description: 'شناسایی ریسک‌های کلان و راهکارهای کاهش',
+                text: 'برای صادرات به [کشور]، چه ریسک‌های سیاسی، اقتصادی و ارزی وجود دارد؟ برای هر ریسک، یک راهکار عملی برای کاهش اثر آن ارائه بده (مثلاً استفاده از ارز جایگزین، بیمه صادراتی، تنوع بازار).'
+            }, {
+                category: 'پایش و توسعه',
+                title: 'برنامه تنوع‌بخشی به بازارهای هدف',
+                description: 'کاهش وابستگی به یک بازار خاص',
+                text: 'در حال حاضر به [کشور] صادرات دارم. برای کاهش ریسک، چه بازارهای جدیدی (در منطقه اوراسیا یا خاورمیانه) را هدف قرار دهم؟ یک برنامه تنوع‌بخشی با اولویت‌بندی بازارها بر اساس سهولت ورود و پتانسیل سود ارائه بده.'
+            },
+
+            // ── تخصصی ──
+            {
+                category: 'تخصصی',
+                title: 'استراتژی صادرات پسته به چین',
+                description: 'فرصت‌ها و چالش‌های بازار چین برای پسته ایران',
+                text: 'برای صادرات پسته ایران به چین، یک استراتژی جامع تدوین کن. شامل: تحلیل تقاضا، رقبای اصلی (آمریکا، ترکیه)، تعرفه‌های گمرکی، الزامات بهداشتی، کانال‌های توزیع در چین، و بهترین زمان برای ورود به بازار.'
+            }, {
+                category: 'تخصصی',
+                title: 'صادرات قیر به کشورهای CIS',
+                description: 'بررسی بازار قیر در روسیه، قزاقستان و ازبکستان',
+                text: 'بازار قیر را در سه کشور روسیه، قزاقستان و ازبکستان تحلیل کن. برای هر کشور: حجم واردات، مشخصات فنی مورد نیاز، رقبای اصلی، و فرصت‌های مناقصه‌های دولتی را بررسی کن. بهترین استراتژی ورود به هر بازار چیست؟'
+            }, {
+                category: 'تخصصی',
+                title: 'صادرات مبلمان اداری به روسیه',
+                description: 'الزامات استاندارد و کانال‌های فروش',
+                text: 'برای صادرات مبلمان اداری به روسیه، چه الزامات استانداردی (GOST، EAC) وجود دارد؟ کانال‌های فروش اصلی (عمده‌فروشی، مناقصه‌های دولتی، فروش مستقیم به شرکت‌ها) کدامند و هر کدام چه مزایا و چالش‌هایی دارند؟'
+            }, {
+                category: 'تخصصی',
+                title: 'ورود به بازار تجهیزات شهری در قزاقستان',
+                description: 'فرصت‌های مناقصه و پروژه‌های شهری',
+                text: 'بازار تجهیزات شهری (نیمکت، سطل زباله، تجهیزات بازی کودکان) در قزاقستان را تحلیل کن. پروژه‌های شهری در حال اجرا، نهادهای تصمیم‌گیرنده، الزامات فنی، و نحوه شرکت در مناقصه‌های دولتی را بررسی کن.'
+            },
+
+            // ── مالی و ارزی ──
+            {
+                category: 'مالی و ارزی',
+                title: 'مدیریت ریسک ارزی در صادرات',
+                description: 'راهکارهای کاهش ریسک نوسانات ارزی',
+                text: 'برای صادرات به [کشور] با ارز [ارز محلی/دلار/یورو]، چه راهکارهایی برای مدیریت ریسک نوسانات ارزی وجود دارد؟ قراردادهای ارزی، صندوق‌های پوشش ریسک، و استفاده از ارزهای دیجیتال یا پایدار را بررسی کن.'
+            }, {
+                category: 'مالی و ارزی',
+                title: 'سیستم‌های پرداخت بین‌المللی برای صادرات',
+                description: 'مقایسه روش‌های پرداخت امن برای صادرات',
+                text: 'برای صادرات [محصول] به [کشور]، چه روش‌های پرداخت بین‌المللی امن‌تر و کارآمدتر هستند؟ LC (اعتبار اسنادی)، پیش‌پرداخت، و روش‌های جایگزین مانند سواپ یا پرداخت از طریق کشورهای ثالث را مقایسه کن.'
+            },
+
+            // ── فرهنگی ──
+            {
+                category: 'فرهنگی',
+                title: 'آداب کسب‌وکار در روسیه',
+                description: 'نکات فرهنگی برای ارتباط مؤثر با روس‌ها',
+                text: 'در تعاملات تجاری با روس‌ها، چه آداب و رسومی را باید رعایت کنم؟ سبک ارتباطی، نحوه احوال‌پرسی، مدیریت زمان، ساختار جلسات، و تابوهای فرهنگی را توضیح بده تا بتوانم ارتباط مؤثرتری برقرار کنم.'
+            }, {
+                category: 'فرهنگی',
+                title: 'آداب کسب‌وکار در کشورهای آسیای میانه',
+                description: 'تفاوت‌های فرهنگی در قزاقستان، ازبکستان و تاجیکستان',
+                text: 'برای مذاکره و ارتباط با خریداران در قزاقستان، ازبکستان و تاجیکستان، چه تفاوت‌های فرهنگی مهمی وجود دارد؟ سبک تصمیم‌گیری، روابط شخصی، نحوه احوال‌پرسی، و هدایای تجاری را بررسی کن.'
+            },
+
+            // ── استراتژی ──
+            {
+                category: 'استراتژی',
+                title: 'استراتژی ورود به بازار ارمنستان',
+                description: 'فرصت‌های صادراتی در ارمنستان برای محصولات ایرانی',
+                text: 'بازار ارمنستان را برای صادرات [محصول] تحلیل کن. حجم واردات، تعرفه‌ها، توافقات تجاری دوجانبه، رقبای اصلی، و بهترین کانال‌های توزیع را بررسی کن. همچنین مزیت رقابتی ایران در این بازار را مشخص کن.'
+            }, {
+                category: 'استراتژی',
+                title: 'برنامه بازاریابی صادراتی یکپارچه',
+                description: 'ترکیب تبلیغات، محتوا و روابط عمومی',
+                text: 'یک برنامه بازاریابی صادراتی یکپارچه برای [محصول] در بازار [کشور] طراحی کن. شامل: ترکیب تبلیغات دیجیتال، تولید محتوا، روابط عمومی، شرکت در نمایشگاه‌ها، و همکاری با اینفلوئنسرهای صنعتی. بودجه تقریبی و جدول زمانی را هم مشخص کن.'
+            },
+
+            // ── اضافی ──
+            {
+                category: 'گمرک و تعرفه',
+                title: 'طبقه‌بندی HS و تعرفه‌های ترجیحی',
+                description: 'شناسایی کد HS صحیح و تعرفه‌های قابل اعمال',
+                text: 'برای [محصول]، کد HS دقیق را مشخص کن. سپس تعرفه واردات به [کشور] را بر اساس توافقات تجاری (EAEU، WTO و غیره) محاسبه کن. اگر تعرفه ترجیحی وجود دارد، شرایط استفاده از آن را توضیح بده.'
+            }, {
+                category: 'گمرک و تعرفه',
+                title: 'رویه‌های گمرکی در روسیه',
+                description: 'مراحل ترخیص کالا در گمرک روسیه',
+                text: 'مراحل ترخیص کالا از گمرک روسیه را برای [محصول] توضیح بده. مدارک مورد نیاز، زمان تقریبی، هزینه‌ها، و نقش کارگزار گمرکی را مشخص کن. همچنین نکات کلیدی برای جلوگیری از تأخیر را بگو.'
+            }
+        ];
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  STATE
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        let chatHistory = [
+            { role: 'system', content: SYSTEM_PROMPT }
+        ];
+        let uploadedFilesData = [];
+        let apiKey = localStorage.getItem('deepseek_api_key') || '';
+
+        document.getElementById('api-key-input').value = apiKey;
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  API KEY
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function saveApiKey() {
+            const key = document.getElementById('api-key-input').value.trim();
+            if (key) {
+                apiKey = key;
+                localStorage.setItem('deepseek_api_key', key);
+                alert('کلید API ذخیره شد.');
+            } else {
+                alert('لطفاً کلید API را وارد کنید.');
+            }
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  QUICK ACTIONS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function insertQuickPrompt(type) {
+            const prompt = QUICK_PROMPTS[type];
+            if (prompt) {
+                document.getElementById('user-input').value = prompt;
+                document.getElementById('user-input').focus();
+            }
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  GALLERY
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function openPromptsGallery() {
+            const overlay = document.getElementById('prompts-gallery-overlay');
+            const list = document.getElementById('prompt-list');
+            list.innerHTML = '';
+
+            GALLERY_PROMPTS.forEach((p) => {
+                const card = document.createElement('div');
+                card.className = 'prompt-card';
+                card.innerHTML = `
+                    <span class="category-tag">${p.category}</span>
+                    <div class="prompt-title">${p.title}</div>
+                    <div class="prompt-desc">${p.description}</div>
+                `;
+                card.addEventListener('click', () => {
+                    document.getElementById('user-input').value = p.text;
+                    closePromptsGallery();
+                    document.getElementById('user-input').focus();
+                });
+                list.appendChild(card);
+            });
+
+            overlay.classList.add('active');
+        }
+
+        function closePromptsGallery() {
+            document.getElementById('prompts-gallery-overlay').classList.remove('active');
+        }
+
+        document.getElementById('prompts-gallery-overlay').addEventListener('click', function(e) {
+            if (e.target === this) closePromptsGallery();
+        });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  FILES
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        document.getElementById('file-input').addEventListener('change', async function(e) {
+            const files = e.target.files;
+            for (const file of files) {
+                try {
+                    const content = await extractFileContent(file);
+                    uploadedFilesData.push({ name: file.name, content });
+                    addFileChip(file.name);
+                } catch (err) {
+                    console.error('Error extracting file:', err);
+                    alert(`خطا در پردازش فایل ${file.name}: ${err.message}`);
+                }
+            }
+            this.value = '';
+        });
+
+        async function extractFileContent(file) {
+            const ext = file.name.split('.').pop().toLowerCase();
+            if (ext === 'pdf') {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                let fullText = '';
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const textContent = await page.getTextContent();
+                    fullText += textContent.items.map(item => item.str).join(' ') + '\n';
+                }
+                return fullText;
+            } else if (['xlsx', 'xls', 'csv'].includes(ext)) {
+                const arrayBuffer = await file.arrayBuffer();
+                const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+                let allText = '';
+                workbook.SheetNames.forEach(name => {
+                    const sheet = workbook.Sheets[name];
+                    allText += `Sheet: ${name}\n${XLSX.utils.sheet_to_csv(sheet)}\n`;
+                });
+                return allText;
+            } else if (['txt', 'md', 'doc', 'docx'].includes(ext)) {
+                return await file.text();
+            } else {
+                throw new Error('فرمت فایل پشتیبانی نمی‌شود.');
+            }
+        }
+
+        function addFileChip(fileName) {
+            const container = document.getElementById('file-chips');
+            const chip = document.createElement('span');
+            chip.className = 'file-chip';
+            chip.innerHTML = `${fileName} <span class="remove-file" onclick="removeFile('${fileName}')">✕</span>`;
+            container.appendChild(chip);
+        }
+
+        function removeFile(fileName) {
+            uploadedFilesData = uploadedFilesData.filter(f => f.name !== fileName);
+            document.querySelectorAll('.file-chip').forEach(chip => {
+                if (chip.textContent.includes(fileName)) chip.remove();
+            });
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  CHAT
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function addMessage(role, content) {
+            const container = document.getElementById('chat-container');
+            const div = document.createElement('div');
+            div.className = `message ${role}`;
+            const sender = role === 'user' ? 'شما' : 'کیان';
+            div.innerHTML = `<div class="sender">${sender}</div>${content.replace(/\n/g, '<br>')}`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const userText = input.value.trim();
+            if (!userText && uploadedFilesData.length === 0) return;
+            if (!apiKey) {
+                alert('لطفاً ابتدا کلید API دیپ‌سیک را وارد و ذخیره کنید.');
+                return;
+            }
+
+            let displayText = userText;
+            if (uploadedFilesData.length > 0) {
+                displayText += '\n\n[فایل‌های پیوست: ' + uploadedFilesData.map(f => f.name).join(', ') + ']';
+            }
+            addMessage('user', displayText);
+
+            let fullContent = userText;
+            if (uploadedFilesData.length > 0) {
+                fullContent += '\n\n--- محتوای فایل‌های پیوست ---';
+                uploadedFilesData.forEach(file => {
+                    fullContent += `\n\n### فایل: ${file.name}\n${file.content.substring(0, 50000)}`;
+                });
+            }
+
+            chatHistory.push({ role: 'user', content: fullContent });
+
+            input.value = '';
+            uploadedFilesData = [];
+            document.getElementById('file-chips').innerHTML = '';
+
+            const thinking = document.createElement('div');
+            thinking.className = 'message assistant';
+            thinking.innerHTML = '<div class="sender">کیان</div>در حال تحلیل...';
+            document.getElementById('chat-container').appendChild(thinking);
+            document.getElementById('chat-container').scrollTop = document.getElementById('chat-container').scrollHeight;
+
+            try {
+                const resp = await fetch(DEEPSEEK_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: MODEL,
+                        messages: chatHistory,
+                        temperature: 0.7,
+                        max_tokens: 2000
+                    })
+                });
+
+                if (!resp.ok) {
+                    const err = await resp.json();
+                    throw new Error(err.error?.message || 'خطا در ارتباط با دیپ‌سیک');
+                }
+
+                const data = await resp.json();
+                const reply = data.choices[0].message.content;
+
+                thinking.remove();
+                addMessage('assistant', reply);
+                chatHistory.push({ role: 'assistant', content: reply });
+
+            } catch (error) {
+                thinking.remove();
+                addMessage('assistant', `⚠️ خطا: ${error.message}`);
+                console.error(error);
+            }
+        }
+
+        // Enter to send (Shift+Enter for new line)
+        document.getElementById('user-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  EXPORT
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function exportChat() {
+            const msgs = document.querySelectorAll('.chat-container .message');
+            let html = `
+                <!DOCTYPE html>
+                <html lang="fa" dir="rtl">
+                <head><meta charset="UTF-8"><title>گزارش گفتگو با کیان</title>
+                <style>
+                    body { font-family: Tahoma, Arial, sans-serif; background: #fff; color: #1e293b; padding: 20px; max-width: 900px; margin:auto; }
+                    h2 { text-align:center; color: #0a1628; border-bottom: 2px solid #c9a84c; padding-bottom: 8px; }
+                    .date { text-align:center; color: #94a3b8; font-size:0.85rem; margin-bottom:20px; }
+                    .msg { border:1px solid #e2e8f0; border-radius:8px; padding:12px 16px; margin-bottom:10px; background:#f8fafc; }
+                    .msg.user { background:#f1f5f9; }
+                    .msg.assistant { background:#e8f0fe; border-color:#bdd3e8; }
+                    .sender { font-weight:700; margin-bottom:4px; color:#0a1628; }
+                    .msg.assistant .sender { color:#c9a84c; }
+                </style>
+                </head>
+                <body>
+                    <h2>گزارش گفتگو با دستیار صادرات کیان</h2>
+                    <div class="date">${new Date().toLocaleString('fa-IR')}</div>
+                    <hr style="border-color:#e2e8f0;margin:12px 0;">
+            `;
+
+            msgs.forEach(msg => {
+                const sender = msg.querySelector('.sender')?.textContent || '';
+                const content = msg.innerHTML.replace(/<div class="sender">.*?<\/div>/, '');
+                const cls = msg.classList.contains('user') ? 'user' : 'assistant';
+                html += `<div class="msg ${cls}"><div class="sender">${sender}</div><div>${content}</div></div>`;
+            });
+
+            html += '</body></html>';
+
+            const win = window.open('', '_blank');
+            win.document.write(html);
+            win.document.close();
+            win.focus();
+            win.print();
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  MODAL (راهنما)
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function openModal() {
+            document.getElementById('modal-overlay').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').classList.remove('active');
+        }
+
+        document.getElementById('modal-overlay').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  PDF WORKER
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+
+</body>
+</html>
