@@ -930,6 +930,10 @@
 
         /* ── Responsive ── */
         @media (max-width: 700px) {
+            body {
+                overflow: auto;
+            }
+
             .header {
                 padding: 0.6rem 1rem;
                 flex-direction: column;
@@ -965,14 +969,25 @@
             }
 
             .input-area {
-                padding: 0.6rem 1rem;
-                flex-direction: column;
+                width: calc(100% - 14px);
+                padding: 8px;
+                margin: 0 auto 10px;
                 position: relative;
+            }
+            .composer-shell {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                padding: 8px 8px 10px;
+            }
+            .input-area .input-wrapper {
+                min-width: 0;
             }
             .input-area .actions-row {
                 width: 100%;
                 justify-content: flex-start;
                 gap: 6px;
+                padding-left: 0;
             }
             .icon-btn, .btn-more {
                 width: 36px;
@@ -980,7 +995,7 @@
                 font-size: 1rem;
             }
             .more-actions-menu {
-                bottom: calc(100% + 6px);
+                bottom: calc(100% + 8px);
                 max-width: 200px;
                 left: auto;
                 right: 0;
@@ -1028,7 +1043,11 @@
 
         @media (max-width: 500px) {
             .input-area {
-                padding: 0.5rem 0.8rem;
+                width: calc(100% - 10px);
+                padding: 6px;
+            }
+            .composer-shell {
+                border-radius: 18px;
             }
             .icon-btn, .btn-more {
                 width: 32px;
@@ -1038,7 +1057,7 @@
             .input-area textarea {
                 min-height: 40px;
                 font-size: 0.85rem;
-                padding: 8px 10px;
+                padding: 10px 12px;
             }
             .more-actions-menu {
                 max-width: 180px;
